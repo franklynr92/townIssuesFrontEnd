@@ -36,6 +36,8 @@ function addDescription(){
     let newUl = document.createElement("ul");
     document.body.appendChild(newUl);
     newUl.append(newLi);
+    document.querySelector(".btn.btn-primary").innerText = "Add Date and Time to the Issue";
+
 }
 
 //event listener
