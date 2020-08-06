@@ -18,8 +18,17 @@ let submitInput = document.createElement("input");
   issueForm.appendChild(submitInput);
 let creationDiv = btn.parentNode;
    creationDiv.appendChild(issueForm);
+submitInput.addEventListener('click', function(){
+    event.preventDefault();
+    addDescription()
+});
 
 };
+
+function addDescription(){
+    
+    alert("we made it")
+}
 
 //event listener
 document.addEventListener("DOMcontentLoaded", console.log );
