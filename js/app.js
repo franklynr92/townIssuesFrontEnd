@@ -1,11 +1,14 @@
 //variables
 let creation = document.querySelector(".creation");
+let btn = document.querySelector(".btn.btn-primary");
 
 //functions
-
+function changeBtn(btn) {
+btn.innerText = "Name the issue";
+};
 
 //event listener
-document.addEventListener("DOMcontentLoaded", console.log("DOM is loaded"));
+document.addEventListener("DOMcontentLoaded", console.log );
 
 
 
@@ -13,9 +16,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     console.log(event);
 });
 
-creation.addEventListener("click", (event) => {
-    let btn = event.currentTarget;
-    console.log(btn);
+btn.addEventListener("click", () => {
+    changeBtn(btn);
 });
 
 
