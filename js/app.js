@@ -5,6 +5,20 @@ let btn = document.querySelector(".btn.btn-primary");
 //functions
 function changeBtn(btn) {
 btn.innerText = "Name the issue";
+
+let issueForm = document.createElement("form");
+  issueForm.setAttribute("id", "Issue.Name");
+let firstInput = document.createElement("input");
+  firstInput.setAttribute("type", "text", "placeholder", "name");
+  firstInput.setAttribute("name", "name of the issue");
+let submitInput = document.createElement("input");
+  submitInput.setAttribute("type", "submit");
+  submitInput.setAttribute("value", "Submit");
+  issueForm.appendChild(firstInput);
+  issueForm.appendChild(submitInput);
+let creationDiv = btn.parentNode;
+   creationDiv.appendChild(issueForm);
+
 };
 
 //event listener
