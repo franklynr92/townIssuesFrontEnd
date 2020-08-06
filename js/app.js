@@ -7,10 +7,12 @@ function changeBtn(btn) {
 btn.innerText = "Name the issue";
 
 let issueForm = document.createElement("form");
-  issueForm.setAttribute("id", "Issue.Name");
+  issueForm.setAttribute("id", "Issue-Name");
 let firstInput = document.createElement("input");
-  firstInput.setAttribute("type", "text", "placeholder", "name");
-  firstInput.setAttribute("name", "name of the issue");
+  firstInput.setAttribute("type", "text")
+  firstInput.setAttribute("placeholder", "issue-name");
+  firstInput.setAttribute("id", "issue-name");
+  firstInput.setAttribute("name", "issue-name");
 let submitInput = document.createElement("input");
   submitInput.setAttribute("type", "submit");
   submitInput.setAttribute("value", "Submit");
@@ -18,7 +20,7 @@ let submitInput = document.createElement("input");
   issueForm.appendChild(submitInput);
 let creationDiv = btn.parentNode;
    creationDiv.appendChild(issueForm);
-submitInput.addEventListener('click', function(){
+issueForm.addEventListener('submit', function(){
     event.preventDefault();
     addDescription()
 });
@@ -26,8 +28,14 @@ submitInput.addEventListener('click', function(){
 };
 
 function addDescription(){
-    
     alert("we made it")
+   let newIssueName = document.getElementById("issue-name");
+   let newLi = document.createElement("li");
+   let newIssueNameNode = document.createTextNode(newIssueName.value);
+   newLi.appendChild(newIssueNameNode);
+    let newUl = document.createElement("ul");
+    document.body.appendChild(newUl);
+    newUl.append(newLi);
 }
 
 //event listener
