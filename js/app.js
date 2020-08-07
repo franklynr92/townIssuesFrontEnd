@@ -1,6 +1,7 @@
 //variables
 let creation = document.querySelector(".creation");
 let btn = document.querySelector("#change");
+let btnTown = document.querySelector("#town");
 let divIssues = document.querySelector(".issues");
 
 //functions
@@ -43,6 +44,8 @@ document.addEventListener("DOMcontentLoaded", console.log );
 
 
 
+
+creation.addEventListener("click", changeBtn);
 
 creation.addEventListener("click", changeBtn);
 
