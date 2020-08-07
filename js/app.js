@@ -22,23 +22,42 @@ let creationDiv = btn.parentNode;
    creationDiv.appendChild(issueForm);
 issueForm.addEventListener('submit', function(){
     event.preventDefault();
-    addDescription()
+    addIssueName()
+});  issueForm.addEventListener('submit', function(){
+  addDescription();
 });
 
 };
 
-function addDescription(){
-    alert("we made it")
+function addIssueName(){
    let newIssueName = document.getElementById("issue-name");
    let newLi = document.createElement("li");
    let newIssueNameNode = document.createTextNode(newIssueName.value);
    newLi.appendChild(newIssueNameNode);
     let newUl = document.createElement("ul");
+    newUl.setAttribute("id", "issues")
     document.body.appendChild(newUl);
     newUl.append(newLi);
-    document.querySelector(".btn.btn-primary").innerText = "Add Date and Time to the Issue";
-
 }
+
+function addDescription() {
+  alert("we made it")
+  document.querySelector(".btn.btn-primary").innerText = "Add Date and Time to the Issue";
+  let descForm = document.createElement("form");
+descForm.setAttribute("id", "desc-Name");
+let firstInput = document.createElement("textarea");
+  firstInput.setAttribute("type", "text-area")
+  firstInput.setAttribute("placeholder", "description");
+  firstInput.setAttribute("id", "desc-name");
+  firstInput.setAttribute("name", "desc-name");
+let submitInput = document.createElement("input");
+  submitInput.setAttribute("type", "submit");
+  submitInput.setAttribute("value", "Submit");
+  descForm.appendChild(firstInput);
+  descForm.appendChild(submitInput);
+let creationDiv = btn.parentNode;
+  creationDiv.appendChild(descForm);
+};
 
 //event listener
 document.addEventListener("DOMcontentLoaded", console.log );
@@ -53,6 +72,9 @@ btn.addEventListener("click", () => {
     changeBtn(btn);
 });
 
+let issueForm = document.getElementById("Issue-Name");
+
+  
 
 //when user clicks on button to `create issue` an event is triggerd []
 // the event will then either go to a function and create form || create form right after event listener []
