@@ -24,7 +24,7 @@ issueForm.addEventListener('submit', function(){
     event.preventDefault();
     addIssueName()
 });  issueForm.addEventListener('submit', function(){
-  addDescription();
+  getIssueDescription();
 });
 
 };
@@ -38,9 +38,9 @@ function addIssueName(){
     newUl.setAttribute("id", "issues")
     document.body.appendChild(newUl);
     newUl.append(newLi);
-}
+};
 
-function addDescription() {
+function getIssueDescription() {
   alert("we made it")
   document.querySelector(".btn.btn-primary").innerText = "Add Date and Time to the Issue";
   let descForm = document.createElement("form");
@@ -57,7 +57,15 @@ let submitInput = document.createElement("input");
   descForm.appendChild(submitInput);
 let creationDiv = btn.parentNode;
   creationDiv.appendChild(descForm);
+  descForm.addEventListener("submit", function(){
+    makeIssueDescription();
+  })
 };
+
+function makeIssueDescription (){
+  alert("Stop...Wait a Minute");
+  debugger
+}
 
 //event listener
 document.addEventListener("DOMcontentLoaded", console.log );
