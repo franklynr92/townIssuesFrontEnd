@@ -41,8 +41,7 @@ function addIssueName(){
 };
 
 function getIssueDescription() {
-  alert("we made it")
-  document.querySelector(".btn.btn-primary").innerText = "Add Date and Time to the Issue";
+  document.querySelector(".btn.btn-primary").innerText = "Description of the issue";
   let descForm = document.createElement("form");
 descForm.setAttribute("id", "desc-Name");
 let firstInput = document.createElement("textarea");
@@ -58,13 +57,20 @@ let submitInput = document.createElement("input");
 let creationDiv = btn.parentNode;
   creationDiv.appendChild(descForm);
   descForm.addEventListener("submit", function(){
+    event.preventDefault();
     makeIssueDescription();
   })
 };
 
 function makeIssueDescription (){
-  alert("Stop...Wait a Minute");
-  debugger
+  let newIssueName = document.getElementById("desc-name");
+  let newLi = document.createElement("li");
+  let newIssueNameNode = document.createTextNode(newIssueName.value);
+  newLi.innerText += "Description: ";
+  newLi.appendChild(newIssueNameNode);
+   let ul = document.getElementById("issues");
+   ul.append(newLi);
+   event.preventDefault();
 }
 
 //event listener
@@ -80,7 +86,7 @@ btn.addEventListener("click", () => {
     changeBtn(btn);
 });
 
-let issueForm = document.getElementById("Issue-Name");
+
 
   
 
