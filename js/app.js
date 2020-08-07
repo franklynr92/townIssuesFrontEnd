@@ -1,11 +1,11 @@
 //variables
 let creation = document.querySelector(".creation");
-let btn = document.querySelector(".btn.btn-primary");
+let btn = document.querySelector("#change");
+let divIssues = document.querySelector(".issues");
 
 //functions
 function changeBtn(btn) {
 btn.innerText = "Name the issue";
-
 let issueForm = document.createElement("form");
   issueForm.setAttribute("id", "Issue-Name");
 let firstInput = document.createElement("input");
@@ -13,56 +13,63 @@ let firstInput = document.createElement("input");
   firstInput.setAttribute("placeholder", "issue-name");
   firstInput.setAttribute("id", "issue-name");
   firstInput.setAttribute("name", "issue-name");
-let submitInput = document.createElement("input");
-  submitInput.setAttribute("type", "submit");
-  submitInput.setAttribute("value", "Submit");
+// let submitInput = document.createElement("input");
+//   submitInput.setAttribute("type", "submit");
+//   submitInput.setAttribute("value", "Submit");
   issueForm.appendChild(firstInput);
-  issueForm.appendChild(submitInput);
-let creationDiv = btn.parentNode;
-   creationDiv.appendChild(issueForm);
-issueForm.addEventListener('submit', function(){
+  // issueForm.appendChild(submitInput);
+   creation.appendChild(issueForm);
+firstInput.addEventListener('keypress', function (e){
+  
+  if (e.key === 'Enter') {
     event.preventDefault();
-    addIssueName()
-});  issueForm.addEventListener('submit', function(){
-  getIssueDescription();
-});
+    addIssueName()}
+});  //issueForm.addEventListener('submit', function(){
+//   event.preventDefault();
+//   getIssueDescription();
+// });
 
 };
 
 function addIssueName(){
    let newIssueName = document.getElementById("issue-name");
    let newLi = document.createElement("li");
+   newLi.innerText += "Name: "
    let newIssueNameNode = document.createTextNode(newIssueName.value);
    newLi.appendChild(newIssueNameNode);
     let newUl = document.createElement("ul");
     newUl.setAttribute("id", "issues")
-    document.body.appendChild(newUl);
+    divIssues.appendChild(newUl);
     newUl.append(newLi);
-};
-
-function getIssueDescription() {
-  document.querySelector(".btn.btn-primary").innerText = "Description of the issue";
-  let descForm = document.createElement("form");
-descForm.setAttribute("id", "desc-Name");
-let firstInput = document.createElement("textarea");
-  firstInput.setAttribute("type", "text-area")
-  firstInput.setAttribute("placeholder", "description");
-  firstInput.setAttribute("id", "desc-name");
-  firstInput.setAttribute("name", "desc-name");
+let descBtn = document.createElement("BUTTON");
+descBtn.setAttribute("class", "btn btn-primary");
+    descBtn.innerText = "Description of the issue";
+let descForm = document.createElement("form");
+    descForm.setAttribute("id", "desc-Name");
+let secondInput = document.createElement("textarea");
+  secondInput.setAttribute("type", "text-area")
+  secondInput.setAttribute("placeholder", "description");
+  secondInput.setAttribute("id", "desc-name");
+  secondInput.setAttribute("name", "desc-name");
 let submitInput = document.createElement("input");
   submitInput.setAttribute("type", "submit");
   submitInput.setAttribute("value", "Submit");
-  descForm.appendChild(firstInput);
-  descForm.appendChild(submitInput);
-let creationDiv = btn.parentNode;
-  creationDiv.appendChild(descForm);
-  descForm.addEventListener("submit", function(){
-    event.preventDefault();
-    makeIssueDescription();
-  })
+  descForm.appendChild(secondInput);
+  descForm.appendChild(descBtn)
+  creation.appendChild(descForm);
+
+descBtn.addEventListener("click",  () => {
+  
+    makeIssueDescription()
+});
+
 };
 
+
 function makeIssueDescription (){
+  event.preventDefault();
+  btn.removeAttribute("id", "change");
+  btn.setAttribute("id", "changes");
   let newIssueName = document.getElementById("desc-name");
   let newLi = document.createElement("li");
   let newIssueNameNode = document.createTextNode(newIssueName.value);
@@ -70,21 +77,18 @@ function makeIssueDescription (){
   newLi.appendChild(newIssueNameNode);
    let ul = document.getElementById("issues");
    ul.append(newLi);
-   event.preventDefault();
-}
+};
 
 //event listener
 document.addEventListener("DOMcontentLoaded", console.log );
 
 
 
-window.addEventListener('DOMContentLoaded', (event) => {
-    console.log(event);
-});
 
 btn.addEventListener("click", () => {
-    changeBtn(btn);
+  changeBtn(btn);
 });
+ 
 
 
 
