@@ -8,3 +8,7 @@
 
 For the AJAX calls
  for this I will create a form where user can enter issue, then once it is added,  I will then append it to the site, and change button to say enter date and time, and then change button to enter description, and then change button to display enter name of issue.
+
+ 3 fetch requests
+
+ 
