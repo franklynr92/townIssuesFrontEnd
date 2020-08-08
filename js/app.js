@@ -54,23 +54,39 @@ fetch(`http://localhost:3000/categories`)
       divCard.setAttribute("id", `category-${category.id}`);
       let type_of_issue = document.createElement("BUTTON");
       categoryDiv.appendChild(divCard);
-      divCard.appendChild(type_of_issue);
+      let ul = document.createElement("ul");
+      ul.appendChild(type_of_issue)
+      divCard.appendChild(ul);
       type_of_issue.innerText = category.type_of_issue;
       type_of_issue.setAttribute("id", `${category.id}`);
       type_of_issue.setAttribute("class", "btn btn-info");
-      divCard.innerHTML += `<br><br>`
+      divCard.innerHTML += `<br><br>`;
       divCard.addEventListener("click", (e) => {
+        if (e.currentTarget.querySelector(".btn.btn-info").nodeName === "BUTTON"){
+        divCategory = e.currentTarget;
         let categoryId = e.currentTarget.getAttribute("id").charAt(9);
-        changeBtn(categoryId)
+        changeBtn(divCard, categoryId)}
       });
     })
   })
+// function categoryForm(e){
+  //   if (e.target.class ==="category"){
+    //     btnCategory.innerText = "Add your Category"
+    //   category.innerHTML = `
+    //   <form id="category-form">
+    //     <input type="text" name="type" placeholder="type_of_category"/> 
+    //     <input type="submit" value="Add The Category" />
+    //     <input type="reset"/>
+    //   </form>
+    // `}
+    // };
+
+  //make an if statement
 
 
-
-function changeBtn(categoryId){
+function changeBtn(divCard, categoryId){
   btn.innerText = "Add the Issue"
-  creation.innerHTML = `
+  creation.innerHTML += `
   <form class="issues-form" id=${categoryId}>
     <input type="text" name="title" placeholder="title"/>
     <input type="text" name="description" placeholder="description of issue"/>
@@ -81,7 +97,7 @@ function changeBtn(categoryId){
     <input type="reset"/>
   </form>
 `
-
+divCard
 }
 
 
@@ -92,8 +108,9 @@ alert(`You have added a Town${name}`)
 
 
 function addIssue(issue){
-  
-  categoryDiv.innerHTML +=`
+  let divCategory = document.getElementById(`category-${issue.category_id}`);
+  divCategory.innerHTML +=`
+  <div
   <p>${issue.title}</p>
   <li>${issue.description}</li>
   <li>${issue.cross_street_1}</li>
@@ -101,7 +118,12 @@ function addIssue(issue){
   <li>${issue.date}</li>
   <li id="resolved">Resolved: ${issue.resolved}</li>
   <p>If Issue is Resolved click button</p>
-  <button type="button" class="btn btn-primary" id="issue-${issue.id}">True</button> `
+  <button type="button" class="btn btn-primary" id="issue-${issue.id}">True</button> 
+  </div>
+  <br>
+  <br>
+  `
+
   alert(`You have added the issue ${issue.title}`)
   
 };
@@ -118,35 +140,6 @@ creation.addEventListener("submit", (e) => {
 });
 
 //event listener
-
-
-
-// town.addEventListener("click", townForm);
-
-// town.addEventListener("submit", addTownName);
-
-// town.addEventListener("submit", function(){
-//     event.preventDefault();
-//     let town = { 
-//       town: {name: document.querySelector("[name='name']").value} 
-//     }
-//     submitTown(town)}
-   
-// );
-//select it
-//listen to it
-//then you have to do it
-//select it again
-//push it through 
-//dataset
-
-
-
-
-
-creation.addEventListener("submit", (e) => {
-  editIssueHandler(e)
-});
 
 function editIssueHandler(e){
   e.preventDefault();
@@ -179,29 +172,36 @@ let postData = {
 };
 return fetch(`http://localhost:3000/issues`, postData)
 .then(resp => resp.json())
+ .then (issue => addIssue(issue))
 
- .then (issue =>
-   addIssue(issue))
-
-// .catch(() => alert("Something went wrong"))
+.catch(() => alert("Something went wrong"))
 };
+
+// town.addEventListener("click", townForm);
+
+// town.addEventListener("submit", addTownName);
+
+// town.addEventListener("submit", function(){
+//     event.preventDefault();
+//     let town = { 
+//       town: {name: document.querySelector("[name='name']").value} 
+//     }
+//     submitTown(town)}
+   
+// );
+//select it
+//listen to it
+//then you have to do it
+//select it again
+//push it through 
+//dataset
 
 
 //when user clicks on button to `create issue` an event is triggerd []
 // the event will then either go to a function and create form || create form right after event listener []
 // form will have input for issue name []
 
-// function categoryForm(e){
-  //   if (e.target.class ==="category"){
-    //     btnCategory.innerText = "Add your Category"
-    //   category.innerHTML = `
-    //   <form id="category-form">
-    //     <input type="text" name="type" placeholder="type_of_category"/> 
-    //     <input type="submit" value="Add The Category" />
-    //     <input type="reset"/>
-    //   </form>
-    // `}
-    // };
+
     
     // function addCategory(e){
       //   e.preventDefault()
