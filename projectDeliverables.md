@@ -11,4 +11,20 @@ For the AJAX calls
 
  3 fetch requests
 
+ make town have many categories
+ make categories have many issues
+ possible:
+ town has many issues through categories
  
+ enter category, data gets sent through then that ID is picked up for that issue
+ user clicks on category
+    form is displayed
+    user enters category name
+        data is fetched to the server and saved
+    user wants to enter an issue
+        category name is displayed
+            then user clicks on which category they want to create the issue for
+             then user clicks on add issue, it creates a fetch request and along with that data
+             the id of the category is taken and put into the submit data for the user
+             
+
