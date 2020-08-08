@@ -4,124 +4,143 @@ let btn = document.querySelector("#change");
 let btnTown = document.querySelector("#town");
 let divIssues = document.querySelector(".issues");
 let town = document.querySelector(".town");
-let category = document.querySelector(".issue_category");
+let categoryDiv = document.querySelector(".issue_category");
 let btnCategory = document.querySelector("#town");
 // let townFormForm = document.querySelector("#town_form");
-const townUrl = "http://localhost:3000/towns";
-const isssueUrl = "http://localhost:3000/issues";
+const townUrl = "https://localhost:3000/towns";
+const issueUrl = "https://localhost:3000/issues";
 let townsObj = [];
 let issueObj = [];
-//functions
-
-
-// fetch("http://localhost:3000/towns")
-//   .then(function(obj){
-//     return obj.json()
-//   })
-//   .then (console.log)
-
-//   fetch(`http://localhost:3000/issues`)
-//   .then(function(obj){
-//     return obj.json()
-//   })
-//   .then(console.log)
-
-function townForm(e){
-  if (e.target.id ==="town"){
-    btnTown.innerText = "Add your Town"
-  town.innerHTML = `
-  <form id="town_form">
-    <input type="text" name="name" placeholder="name"/>
-    <input type="submit" value="Add The Town" />
-    <input type="reset"/>
-  </form>
-`}
-};
-
-function submitTown(town){
-  let postData = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify(town)
-  };
-  return fetch(townUrl, postData)
-  .then(resp => resp.json())
-  .then(town => addTownName(town.name))
-  .catch(() => alert("Something went wrong"))
-} 
 
 
 
-function changeBtn(e){
-  if (e.target.id === "change"){
+
+
+  
+// function townForm(e){
+//   if (e.target.id ==="town"){
+//     btnTown.innerText = "Add your Town"
+//   town.innerHTML = `
+//   <form id="town_form">
+//     <input type="text" name="name" placeholder="name"/>
+//     <input type="submit" value="Add The Town" />
+//     <input type="reset"/>
+//   </form>
+// `}
+// };
+
+// function submitTown(town){
+//   let postData = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Accept": "application/json"
+//     },
+//     body: JSON.stringify(town)
+//   };
+//   return fetch(townUrl, postData)
+//   .then(resp => resp.json())
+//   .then(town => addTownName(town.name))
+//   .catch(() => alert("Something went wrong"))
+// } 
+
+fetch(`http://localhost:3000/categories`)
+  .then(function(obj){
+    return obj.json()
+  })
+  .then(function (categoriesArray){
+    categoriesArray.forEach(function(category){
+      let divCard = document.createElement("div");
+      divCard.setAttribute("id", `category-${category.id}`);
+      let type_of_issue = document.createElement("BUTTON");
+      categoryDiv.appendChild(divCard);
+      divCard.appendChild(type_of_issue);
+      type_of_issue.innerText = category.type_of_issue;
+      type_of_issue.setAttribute("id", `${category.id}`);
+      type_of_issue.setAttribute("class", "btn btn-info");
+      divCard.innerHTML += `<br><br>`
+      divCard.addEventListener("click", (e) => {
+        let categoryId = e.currentTarget.getAttribute("id").charAt(9);
+        changeBtn(categoryId)
+      });
+    })
+  })
+
+
+
+function changeBtn(categoryId){
   btn.innerText = "Add the Issue"
   creation.innerHTML = `
-  <form id="issues-form">
-    <input type="text" name="name" placeholder="name"/>
+  <form class="issues-form" id=${categoryId}>
+    <input type="text" name="title" placeholder="title"/>
     <input type="text" name="description" placeholder="description of issue"/>
     <input type="text" name="cross_street_1" placeholder="cross street 1"/>
     <input type="text" name="cross_street_2" placeholder="cross street 2"/>
     <input type="date" name="date"/>
-    <input type="checkbox" name="resolved" value="resolved"  />
-    <label for="resolved"> Is the issue resolved?</label>
     <input type="submit" value="Add The Issue" />
     <input type="reset"/>
   </form>
-`}
+`
+
 }
 
+
 function addTownName(name){
-console.log(name)
-divIssues.innerHTML += `<h3>${name}</h3>`
+town.innerHTML += `<h3>${name}</h3>`
 alert(`You have added a Town${name}`)
 };
 
 
 function addIssue(issue){
-  console.log(issue)
   
-  divIssues.innerHTML +=`<ul>
-  <p>${issue.name}</p>
+  categoryDiv.innerHTML +=`
+  <p>${issue.title}</p>
   <li>${issue.description}</li>
   <li>${issue.cross_street_1}</li>
   <li>${issue.cross_street_2}</li>
   <li>${issue.date}</li>
-  </ul>`
-  alert(`You have added the issue ${issue.name}`)
+  <li id="resolved">Resolved: ${issue.resolved}</li>
+  <p>If Issue is Resolved click button</p>
+  <button type="button" class="btn btn-primary" id="issue-${issue.id}">True</button> `
+  alert(`You have added the issue ${issue.title}`)
+  
 };
 
 
+  // somethingDiv.addEventListener("click", (e) => {
+  //   console.log(e.currentTarget)
+  //   debugger
+  // });
+
+
+creation.addEventListener("submit", (e) => {
+  editIssueHandler(e)
+});
 
 //event listener
-document.addEventListener("DOMcontentLoaded", console.log );
 
 
-town.addEventListener("click", townForm);
+
+// town.addEventListener("click", townForm);
 
 // town.addEventListener("submit", addTownName);
 
-town.addEventListener("submit", function(){
-    event.preventDefault();
-    let town = { 
-      town: {name: document.querySelector("[name='name']").value} 
-    }
-    
-    // let townName = event.currentTarget.querySelector("#town_name").value;
-    submitTown(town)}
-    //event.currentTarget.reset()
-);
+// town.addEventListener("submit", function(){
+//     event.preventDefault();
+//     let town = { 
+//       town: {name: document.querySelector("[name='name']").value} 
+//     }
+//     submitTown(town)}
+   
+// );
 //select it
 //listen to it
-
 //then you have to do it
 //select it again
-//push it through that bitch
+//push it through 
 //dataset
 
-creation.addEventListener("click", changeBtn);
+
 
 
 
@@ -131,22 +150,24 @@ creation.addEventListener("submit", (e) => {
 
 function editIssueHandler(e){
   e.preventDefault();
-  
-    let nameInput =  document.querySelector("[name='name']").value;
+    
+    let titleInput =  document.querySelector("[name='title']").value;
     let descriptionInput = document.querySelector("[name='description']").value;
     let cross_street_1Input = document.querySelector("[name='cross_street_1']").value;
     let cross_street_2Input = document.querySelector("[name='cross_street_2']").value;
     let dateInput = document.querySelector("[name='date']").value
-  submitIssue(nameInput, descriptionInput, cross_street_1Input, cross_street_2Input, dateInput);
+    let categoryInput = e.currentTarget.querySelector("form").getAttribute("id");
+  submitIssue(titleInput, descriptionInput, cross_street_1Input, cross_street_2Input, dateInput, categoryInput);
 }
 
-function submitIssue(name, description, cross_street_1, cross_street_2, date){
+function submitIssue(title, description, cross_street_1, cross_street_2, date, id){
  issue = {
-  name: name,
+  title: title,
   description: description,
   cross_street_1: cross_street_1,
   cross_street_2: cross_street_2,
-  date: date
+  date: date,
+  category_id: id
   }
 let postData = {
   method: "POST",
@@ -156,13 +177,13 @@ let postData = {
   },
   body: JSON.stringify(issue)
 };
-return fetch(isssueUrl, postData)
+return fetch(`http://localhost:3000/issues`, postData)
 .then(resp => resp.json())
-.then
-(issue =>
-  addIssue(issue))
 
-.catch(() => alert("Something went wrong"))
+ .then (issue =>
+   addIssue(issue))
+
+// .catch(() => alert("Something went wrong"))
 };
 
 
@@ -170,13 +191,12 @@ return fetch(isssueUrl, postData)
 // the event will then either go to a function and create form || create form right after event listener []
 // form will have input for issue name []
 
-
 // function categoryForm(e){
-  //   if (e.target.id ==="category"){
+  //   if (e.target.class ==="category"){
     //     btnCategory.innerText = "Add your Category"
     //   category.innerHTML = `
     //   <form id="category-form">
-    //     <input type="text" id="category_name" placeholder="name"/>
+    //     <input type="text" name="type" placeholder="type_of_category"/> 
     //     <input type="submit" value="Add The Category" />
     //     <input type="reset"/>
     //   </form>
@@ -194,3 +214,15 @@ return fetch(isssueUrl, postData)
 
       // category.addEventListener("click", categoryForm);
       // category.addEventListener("submit", addCategory);
+
+  //     fetch("http://localhost:3000/towns")
+  // .then(function(obj){
+  //   return obj.json()
+  // })
+  // .then (console.log)
+
+//   fetch(`http://localhost:3000/issues`)
+//   .then(function(obj){
+//     return obj.json()
+//   })
+//   .then(console.log)
