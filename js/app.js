@@ -7,8 +7,9 @@ let town = document.querySelector(".town");
 let categoryDiv = document.querySelector(".issue_category");
 let btnCategory = document.querySelector("#town");
 // let townFormForm = document.querySelector("#town_form");
+let currentIssues = document.querySelector("#current_issues");
 const townUrl = "https://localhost:3000/towns";
-const issueUrl = "https://localhost:3000/issues";
+const issueUrl = "http://localhost:3000/issues";
 let townsObj = [];
 let issueObj = [];
 
@@ -69,6 +70,15 @@ fetch(`http://localhost:3000/categories`)
       });
     })
   })
+
+  function getTownIssues(){
+    fetch(issueUrl)
+  .then(function(obj){
+    return obj.json()
+  })
+  .then(function (issuesArray){
+    issuesArray.forEach(issue => addIssue(issue))});
+  };
 // function categoryForm(e){
   //   if (e.target.class ==="category"){
     //     btnCategory.innerText = "Add your Category"
@@ -106,33 +116,47 @@ town.innerHTML += `<h3>${name}</h3>`
 alert(`You have added a Town${name}`)
 };
 
+// function submitTown("http://localhost:3000/towns"){
+//     let getData = {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "Accept": "application/json"
+//       },
+//       body: JSON.stringify(town)
+//     };
+//     return fetch(townUrl, getData)
+//     .then(resp => resp.json())
+//     .then(town => addTownName(town.name))
+//     .catch(() => alert("Something went wrong"))
+//   } 
+
 
 function addIssue(issue){
   let divCategory = document.getElementById(`category-${issue.category_id}`);
   divCategory.innerHTML +=`
-  <div
+  <div id="issue-${issue.id}">
+  <ul>
   <p>${issue.title}</p>
   <li>${issue.description}</li>
   <li>${issue.cross_street_1}</li>
   <li>${issue.cross_street_2}</li>
   <li>${issue.date}</li>
   <li id="resolved">Resolved: ${issue.resolved}</li>
+  </ul>
   <p>If Issue is Resolved click button</p>
   <button type="button" class="btn btn-primary" id="issue-${issue.id}">True</button> 
   </div>
   <br>
-  <br>
-  `
-
-  alert(`You have added the issue ${issue.title}`)
+`
+  // alert(`You have added the issue ${issue.title}`)
   
 };
 
-
-  // somethingDiv.addEventListener("click", (e) => {
-  //   console.log(e.currentTarget)
-  //   debugger
-  // });
+ currentIssues.addEventListener("click", function(){
+  alert("Let's get those issues!")
+  getTownIssues();
+});
 
 
 creation.addEventListener("submit", (e) => {
@@ -177,6 +201,13 @@ return fetch(`http://localhost:3000/issues`, postData)
 .catch(() => alert("Something went wrong"))
 };
 
+
+// fetch(`http://localhost:3000/issues`)
+// .then(function(obj){
+//   return obj.json()
+// })
+// .then(resp => resp.json())
+// .then (results => {console.log});
 // town.addEventListener("click", townForm);
 
 // town.addEventListener("submit", addTownName);
@@ -221,8 +252,4 @@ return fetch(`http://localhost:3000/issues`, postData)
   // })
   // .then (console.log)
 
-//   fetch(`http://localhost:3000/issues`)
-//   .then(function(obj){
-//     return obj.json()
-//   })
-//   .then(console.log)
+ 
