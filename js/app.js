@@ -6,12 +6,16 @@ let divIssues = document.querySelector(".issues");
 let town = document.querySelector(".town");
 let categoryDiv = document.querySelector(".issue_category");
 let btnCategory = document.querySelector("#town");
+let creationIssueForm = document.querySelector(".creation_issue_form");
 // let townFormForm = document.querySelector("#town_form");
 let currentIssues = document.querySelector("#current_issues");
 const townUrl = "https://localhost:3000/towns";
 const issueUrl = "http://localhost:3000/issues";
 let townsObj = [];
 let issueObj = [];
+let getCategories = document.querySelector(".get_category")
+
+
 
 
 
@@ -44,17 +48,19 @@ let issueObj = [];
 //   .then(town => addTownName(town.name))
 //   .catch(() => alert("Something went wrong"))
 // } 
-
+function getIssueCategories(){
 fetch(`http://localhost:3000/categories`)
   .then(function(obj){
     return obj.json()
   })
   .then(function (categoriesArray){
     categoriesArray.forEach(function(category){
+      
       let divCard = document.createElement("div");
       divCard.setAttribute("id", `category-${category.id}`);
       let type_of_issue = document.createElement("BUTTON");
       categoryDiv.appendChild(divCard);
+      categoryDiv.removeAttribute("id", "hidethis");
       let ul = document.createElement("ul");
       ul.appendChild(type_of_issue)
       divCard.appendChild(ul);
@@ -63,13 +69,15 @@ fetch(`http://localhost:3000/categories`)
       type_of_issue.setAttribute("class", "btn btn-info");
       divCard.innerHTML += `<br><br>`;
       divCard.addEventListener("click", (e) => {
-        if (e.currentTarget.querySelector(".btn.btn-info").nodeName === "BUTTON"){
+        if (e.currentTarget.querySelector(".btn.btn-info").className === "btn btn-info"){
         divCategory = e.currentTarget;
         let categoryId = e.currentTarget.getAttribute("id").charAt(9);
-        changeBtn(divCard, categoryId)}
+        let categoryName = e.currentTarget.innerText;
+        changeBtn(divCard, categoryId, categoryName)}
       });
     })
   })
+};
 
   function getTownIssues(){
     fetch(issueUrl)
@@ -94,9 +102,10 @@ fetch(`http://localhost:3000/categories`)
   //make an if statement
 
 
-function changeBtn(divCard, categoryId){
+function changeBtn(divCard, categoryId, categoryName){
   btn.innerText = "Add the Issue"
-  creation.innerHTML += `
+  creationIssueForm.innerHTML += `
+  <h3>Enter Issue for ${categoryName}</h3>
   <form class="issues-form" id=${categoryId}>
     <input type="text" name="title" placeholder="title"/>
     <input type="text" name="description" placeholder="description of issue"/>
@@ -107,6 +116,8 @@ function changeBtn(divCard, categoryId){
     <input type="reset"/>
   </form>
 `
+creationIssueForm.scrollIntoView();
+// window.scrollTo(-1,document.body.scrollHeight);
 divCard
 }
 
@@ -133,8 +144,7 @@ alert(`You have added a Town${name}`)
 
 
 function addIssue(issue){
-  let divCategory = document.getElementById(`category-${issue.category_id}`);
-  divCategory.innerHTML +=`
+  creationIssueForm.innerHTML +=`
   <div id="issue-${issue.id}">
   <ul>
   <p>${issue.title}</p>
@@ -149,6 +159,7 @@ function addIssue(issue){
   </div>
   <br>
 `
+// window.scrollTo(0,document.querySelector(`#category-${issue.category_id}`).scrollHeight);
   // alert(`You have added the issue ${issue.title}`)
   
 };
@@ -158,8 +169,14 @@ function addIssue(issue){
   getTownIssues();
 });
 
+getCategories.addEventListener("click", (e) => {
+  e.currentTarget.setAttribute("class", "hide_this")
+  alert("Let's get those categories!")
+  getIssueCategories();
+})
 
-creation.addEventListener("submit", (e) => {
+
+creationIssueForm.addEventListener("submit", (e) => {
   editIssueHandler(e)
 });
 
@@ -167,13 +184,13 @@ creation.addEventListener("submit", (e) => {
 
 function editIssueHandler(e){
   e.preventDefault();
-    
     let titleInput =  document.querySelector("[name='title']").value;
     let descriptionInput = document.querySelector("[name='description']").value;
     let cross_street_1Input = document.querySelector("[name='cross_street_1']").value;
     let cross_street_2Input = document.querySelector("[name='cross_street_2']").value;
     let dateInput = document.querySelector("[name='date']").value
     let categoryInput = e.currentTarget.querySelector("form").getAttribute("id");
+    creationIssueForm.innerHTML = "";
   submitIssue(titleInput, descriptionInput, cross_street_1Input, cross_street_2Input, dateInput, categoryInput);
 }
 
