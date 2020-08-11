@@ -5,7 +5,6 @@ let btnTown = document.querySelector("#town");
 let divIssues = document.querySelector(".issues");
 let town = document.querySelector(".town");
 let categoryDiv = document.querySelector(".issue_category");
-let btnCategory = document.querySelector("#town");
 let creationIssueForm = document.querySelector(".creation_issue_form");
 // let townFormForm = document.querySelector("#town_form");
 let currentIssues = document.querySelector("#current_issues");
