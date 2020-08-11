@@ -226,9 +226,5 @@ return fetch(`http://localhost:3000/issues`, postData)
       // category.addEventListener("click", categoryForm);
       // category.addEventListener("submit", addCategory);
 
-  //     fetch("http://localhost:3000/towns")
-  // .then(function(obj){
-  //   return obj.json()
-  // })
 
  
