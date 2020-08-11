@@ -97,20 +97,6 @@ town.innerHTML += `<h3>${name}</h3>`
 alert(`You have added a Town${name}`)
 };
 
-// function submitTown("http://localhost:3000/towns"){
-//     let getData = {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         "Accept": "application/json"
-//       },
-//       body: JSON.stringify(town)
-//     };
-//     return fetch(townUrl, getData)
-//     .then(resp => resp.json())
-//     .then(town => addTownName(town.name))
-//     .catch(() => alert("Something went wrong"))
-//   } 
 
 
 function addIssue(issue){
