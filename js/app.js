@@ -18,36 +18,6 @@ let getCategories = document.querySelector(".get_category")
 
 
 
-
-
-
-  
-// function townForm(e){
-//   if (e.target.id ==="town"){
-//     btnTown.innerText = "Add your Town"
-//   town.innerHTML = `
-//   <form id="town_form">
-//     <input type="text" name="name" placeholder="name"/>
-//     <input type="submit" value="Add The Town" />
-//     <input type="reset"/>
-//   </form>
-// `}
-// };
-
-// function submitTown(town){
-//   let postData = {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Accept": "application/json"
-//     },
-//     body: JSON.stringify(town)
-//   };
-//   return fetch(townUrl, postData)
-//   .then(resp => resp.json())
-//   .then(town => addTownName(town.name))
-//   .catch(() => alert("Something went wrong"))
-// } 
 function getIssueCategories(){
 fetch(`http://localhost:3000/categories`)
   .then(function(obj){
