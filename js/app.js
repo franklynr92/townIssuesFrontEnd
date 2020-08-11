@@ -16,7 +16,7 @@ let getCategories = document.querySelector(".get_category")
 //functions 
 
 
-function getIssueCategories(){
+const getIssueCategories = () =>{
 fetch(categoryUrl)
   .then(function(obj){
     return obj.json()
@@ -41,7 +41,6 @@ fetch(categoryUrl)
       divIssues.removeAttribute("id", "hide_this")
      
       divCard.addEventListener("click", (e) => {
-        debugger;
         if (e.currentTarget.className === "categories"){
         divCategory = e.currentTarget;
         divCategory.setAttribute("class", "hide_this");
@@ -57,7 +56,7 @@ fetch(categoryUrl)
 };
 
 
-  function getTownIssues(){
+ const getTownIssues = () =>{
     fetch(issueUrl)
   .then(function(obj){
     return obj.json()
@@ -66,7 +65,7 @@ fetch(categoryUrl)
     issuesArray.forEach(issue => addIssue(issue))});
   };
 
-function categoryForm(){
+const categoryForm = () => {
   creationCategoryForm.innerHTML = `
     <form id="category-form">
       <input type="text" name="type_of_issue" placeholder="type of category"/> 
@@ -78,7 +77,7 @@ function categoryForm(){
 
 
 
-function changeBtn(categoryId, categoryName){
+const changeBtn = (categoryId, categoryName) => {
   creationIssueForm.innerHTML += `
   <h3>Enter Issue for ${categoryName}</h3>
   <form class="issues-form" id=${categoryId}>
@@ -99,14 +98,14 @@ function changeBtn(categoryId, categoryName){
 }
 
 
-function addTownName(name){
+const addTownName = name => {
 town.innerHTML += `<h3>${name}</h3>`
 alert(`You have added a Town${name}`)
 };
 
 
 
-function addIssue(issue){
+const addIssue = issue => {
 let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
   creationIssueForm.removeAttribute("id", "hidethis")
@@ -129,7 +128,7 @@ let categoryName =  document.getElementById(`category-${issue.category_id}`).inn
 window.scrollTo(0,document.body.scrollHeight); 
 };
 
-function submitCategory(category){
+const submitCategory = category => {
     let postData = {
       method: "POST",
       headers: {
@@ -161,9 +160,10 @@ creationCategoryForm.addEventListener("submit", function(){
 })
 
  currentIssues.addEventListener("click", function(){
-  divIssues.setAttribute("id", "hidethis")
+  // divIssues.setAttribute("id", "hidethis")
   creationIssueForm.innerHTML = ""
   alert("Let's get those issues!")
+
   getTownIssues();
 });
 
@@ -180,7 +180,7 @@ creationIssueForm.addEventListener("submit", (e) => {
 
 //event listener
 
-function editIssueHandler(e){
+const editIssueHandler = e  =>{
   e.preventDefault();
     let titleInput =  document.querySelector("[name='title']").value;
     let descriptionInput = document.querySelector("[name='description']").value;
