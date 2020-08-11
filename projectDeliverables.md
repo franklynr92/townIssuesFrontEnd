@@ -81,4 +81,6 @@ render json: category
 
 // show only that category
 
-//issues that are 
+//issues that are
+
+//when user clicks on category, form appears and sets other categories to an attribute of hide_this or hidethis or remove click from issues_category div

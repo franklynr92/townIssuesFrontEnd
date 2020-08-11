@@ -1,12 +1,14 @@
 //variables
 let creation = document.querySelector(".creation");
 let makeCategory = document.querySelector(".make_category");
+let creationCategoryForm = document.querySelector(".creation_category_form")
 let divIssues = document.querySelector(".issues");
 let town = document.querySelector(".town");
 let categoryDiv = document.querySelector(".issue_category");
 let creationIssueForm = document.querySelector(".creation_issue_form");
 let currentIssues = document.querySelector("#current_issues");
 const issueUrl = "http://localhost:3000/issues";
+const categoryUrl = "http://localhost:3000/categories";
 let getCategories = document.querySelector(".get_category")
 
 
@@ -15,15 +17,17 @@ let getCategories = document.querySelector(".get_category")
 
 
 function getIssueCategories(){
-fetch(`http://localhost:3000/categories`)
+fetch(categoryUrl)
   .then(function(obj){
     return obj.json()
   })
   .then(function (categoriesArray){
+    makeCategory.removeAttribute("id", "hide_this")
     categoriesArray.forEach(function(category){
-      
+      creationCategoryForm.innerHTML = ""  
       let divCard = document.createElement("div");
       divCard.setAttribute("id", `category-${category.id}`);
+      divCard.setAttribute("class", "categories");
       let type_of_issue = document.createElement("BUTTON");
       categoryDiv.appendChild(divCard);
       categoryDiv.removeAttribute("id", "hidethis");
@@ -35,22 +39,23 @@ fetch(`http://localhost:3000/categories`)
       type_of_issue.setAttribute("class", "btn btn-info");
       divCard.innerHTML += `<br><br>`;
       divIssues.removeAttribute("id", "hide_this")
-      makeCategory.removeAttribute("id", "hide_this")
+     
       divCard.addEventListener("click", (e) => {
-        if (e.currentTarget.querySelector(".btn.btn-info").className === "btn btn-info"){
+        debugger;
+        if (e.currentTarget.className === "categories"){
         divCategory = e.currentTarget;
         divCategory.setAttribute("class", "hide_this");
         categoryDiv.setAttribute("class",  "hide_this");
         let categoryId = e.currentTarget.getAttribute("id").charAt(9);
         let categoryName = e.currentTarget.innerText;
-        changeBtn(divCard, categoryId, categoryName
-          
-          )}
+        changeBtn(categoryId, categoryName)
+        }
         }
       );
     })
   })
 };
+
 
   function getTownIssues(){
     fetch(issueUrl)
@@ -62,9 +67,9 @@ fetch(`http://localhost:3000/categories`)
   };
 
 function categoryForm(){
-  makeCategory.innerHTML = `
+  creationCategoryForm.innerHTML = `
     <form id="category-form">
-      <input type="text" name="type" placeholder="type_of_category"/> 
+      <input type="text" name="type_of_issue" placeholder="type of category"/> 
       <input type="submit" value="Add The Category" />
       <input type="reset"/>
     </form>
@@ -74,7 +79,6 @@ function categoryForm(){
 
 
 function changeBtn(categoryId, categoryName){
-  btn.innerText = "Add the Issue"
   creationIssueForm.innerHTML += `
   <h3>Enter Issue for ${categoryName}</h3>
   <form class="issues-form" id=${categoryId}>
@@ -105,6 +109,7 @@ alert(`You have added a Town${name}`)
 function addIssue(issue){
 let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
+  creationIssueForm.removeAttribute("id", "hidethis")
   creationIssueForm.innerHTML +=`  
   <div id=${issue.id}>
   <h3>Category: ${categoryName}</h3>
@@ -121,17 +126,39 @@ let categoryName =  document.getElementById(`category-${issue.category_id}`).inn
   </div>
   <br>
 `
-window.scrollTo(0,document.body.scrollHeight);
-  // alert(`You have added the issue ${issue.title}`)
-  
+window.scrollTo(0,document.body.scrollHeight); 
 };
 
-makeCategory.addEventListener("click", function () {
+function submitCategory(category){
+    let postData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(category)
+    };
+    return fetch(categoryUrl, postData)
+    .then(resp => resp.json())
+    .then(getIssueCategories())
+  } 
+
+makeCategory.addEventListener("click", function(){
   categoryDiv.setAttribute("id", "hidethis");
   creationIssueForm.setAttribute("id", "hidethis")
-categoryForm();
+  divIssues.setAttribute("id", "hidethis")
+  creation.setAttribute("id", "hidethis")
+  categoryForm();
+  
 })
 
+creationCategoryForm.addEventListener("submit", function(){
+  event.preventDefault();
+  let category = { 
+    type_of_issue:document.querySelector("[name='type_of_issue']").value
+  }
+  submitCategory(category)
+})
 
  currentIssues.addEventListener("click", function(){
   divIssues.setAttribute("id", "hidethis")
@@ -144,7 +171,7 @@ getCategories.addEventListener("click", (e) => {
   e.currentTarget.setAttribute("class", "hide_this")
   alert("Let's get those categories!")
   getIssueCategories();
-})
+});
 
 
 creationIssueForm.addEventListener("submit", (e) => {
