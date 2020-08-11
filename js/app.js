@@ -181,22 +181,7 @@ return fetch(`http://localhost:3000/issues`, postData)
 };
 
 
-// fetch(`http://localhost:3000/issues`)
-// .then(function(obj){
-//   return obj.json()
-// })
-// .then(resp => resp.json())
-// .then (results => {console.log});
-// town.addEventListener("click", townForm);
 
-// town.addEventListener("submit", addTownName);
-
-// town.addEventListener("submit", function(){
-//     event.preventDefault();
-//     let town = { 
-//       town: {name: document.querySelector("[name='name']").value} 
-//     }
-//     submitTown(town)}
    
 // );
 //select it
