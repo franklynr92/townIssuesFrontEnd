@@ -28,3 +28,57 @@ For the AJAX calls
              the id of the category is taken and put into the submit data for the user
              
 
+Once a user clicks on a category the other category's are hidden
+categorys are given an attribute of display: none or only issues with a category id matching of that category can be displayed
+or only issues with a category ID of that category is dispalyed
+
+click
+
+ let issueCategoryId = e.currenTarget.id;
+pass issueCategoryId into a fetch
+
+
+addIssue(issueCategoryID, issue)
+ if issue.category_id === issueCategoryID
+ issue.map
+
+
+
+
+change flow
+
+
+retrieve issues by category id by passing in the id attribute of the div which houses the id of the category and using that in the issues url,  to find those issues and pass it back to the fetch with HTTP verb of `GET`  and then pass in that object to the addIssue(issue) function{ }
+
+// if i only display that category, in theory I should only be able
+//to get those issues that match with the id
+//or... i can make it so that it only displays the issue with that //category_id
+//make an if statement if(issue.category_id === category_id)
+    ///either div.setAttribute = display:blocK
+    // ||
+    // creationIssueForm.innerHTML += <div></div>}
+    //else { creationIssueForm.removeElement || creationIssueForm.innerHTML = ""}
+//fetch with url of "http://localhost:3000/{issue.category_id}"
+// in controller scope method
+//select an issue and grab that single one using fetch
+//make controller action with update to edit the issue
+// the update would be to be able to  update that it is resolved
+//or not
+//|| && make controller action to destroy that issue
+//document.querySelector grab by id and then create a pop that 
+//will say you are removing this issue with this ?id?
+// and make if statment if(document.querySelector("))
+
+do the same thing with the categories once one is clicked, hide the others
+
+// do this by when category is clicked
+// the innerHTML of the parent div is either removed or cleared
+// make another fetch to get the categories, 
+// but only pass in the id to retrive that cateogry
+// in the backen only category = Category.find_by_id(params[:category_id])
+render json: category
+
+
+// show only that category
+
+//issues that are 

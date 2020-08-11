@@ -144,10 +144,16 @@ alert(`You have added a Town${name}`)
 
 
 function addIssue(issue){
-  creationIssueForm.innerHTML +=`
-  <div id="issue-${issue.id}">
-  <ul>
-  <p>${issue.title}</p>
+  // console.log(issue)
+let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
+
+  let titleToUp = issue.title.toUpperCase();
+  
+  creationIssueForm.innerHTML +=`  
+  <div id=${issue.id}>
+  <h3>${categoryName}</h3>
+  <ul>Issue #${issue.id}
+  <p>Title: ${titleToUp}</p>
   <li>${issue.description}</li>
   <li>${issue.cross_street_1}</li>
   <li>${issue.cross_street_2}</li>
@@ -257,6 +263,7 @@ return fetch(`http://localhost:3000/issues`, postData)
       //   divIssues.innerHTML += `<h4>${inputName.value}</h4>`
       //   alert("You have added a category")
       // };
+      // .then (console.log)
 
 
 
@@ -267,6 +274,5 @@ return fetch(`http://localhost:3000/issues`, postData)
   // .then(function(obj){
   //   return obj.json()
   // })
-  // .then (console.log)
 
  
