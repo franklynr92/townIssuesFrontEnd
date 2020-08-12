@@ -13,25 +13,17 @@ const categoryUrl = "http://localhost:3000/categories";
 let getCategories = document.querySelector(".get_category")
 const categoryAdapter = new CategoriesAdapter("http://localhost:3000/categories");
 
-
 //functions 
-// getIssueCategories()
 
-const getIssueCategories = () =>{
-fetch(categoryUrl)
-  .then(function(obj){
-    return obj.json()
-  })
-// categoryAdapter.fetchCategories
-  .then(function(categoriesArray){
-    categoriesArray.forEach(function(category){
-      makeCategory.removeAttribute("id", "hide_this")
-      creationCategoryForm.innerHTML = ""  
-      getCategoriesIssue(category);
-    })
-  });
+// const getIssueCategories = () =>{
+// fetch(categoryUrl)
+//   .then(function(obj){
+//     return obj.json()
+//   })
 
-  function getCategoriesIssue(category) {
+
+
+function getCategoriesIssue(category) {
       let divCard = document.createElement("div");
       divCard.setAttribute("id", `category-${category.id}`);
       divCard.setAttribute("class", "categories");
@@ -58,16 +50,16 @@ fetch(categoryUrl)
         }
       );
   }
-}
 
- const getTownIssues = () =>{
-    fetch(issueUrl)
-  .then(function(obj){
-    return obj.json()
-  })
-  .then(function (issuesArray){
-    issuesArray.forEach(issue => addIssue(issue))});
-  };
+
+//  const getTownIssues = () =>{
+//     fetch(issueUrl)
+//   .then(function(obj){
+//     return obj.json()
+//   })
+//   .then(function (issuesArray){
+//     issuesArray.forEach(issue => addIssue(issue))});
+//   };
 
 const categoryForm = () => {
   creationCategoryForm.innerHTML = `
@@ -78,8 +70,6 @@ const categoryForm = () => {
     </form>
 `
 }
-
-
 
 const changeBtn = (categoryId, categoryName) => {
   creationIssueForm.innerHTML += `
@@ -98,7 +88,6 @@ const changeBtn = (categoryId, categoryName) => {
   <hr>
 `
  window.scrollTo(0,document.body.scrollHeight);
-
 }
 
 
@@ -110,7 +99,7 @@ alert(`You have added a Town${name}`)
 
 
 const addIssue = issue => {
-  issue
+  // issue
   let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
   divIssues.removeAttribute("id", "hidethis")
@@ -134,11 +123,25 @@ const addIssue = issue => {
   <br>
 `
 window.scrollTo(0,document.body.scrollHeight); 
+const resolvedIssues = document.querySelectorAll("#resolved");
 
-  console.log(issue)
+resolvedIssues.forEach(resolvedIssue => resolvedIssue.addEventListener("click", (e)=>{
+  console.log(e.currentTarget)
+  debugger;
+
+}))
+  
+  
 }
 
 
+
+// resolvedIssue.addEventListener("click", (e) => {
+//   console.log(e.currentTarget)
+//   // divIssues.setAttribute("id", "hidethis")
+//   // updateIssues.removeAttribute("id", "hidethis")
+//   // console.log(issue)
+// })
 
 
 
@@ -186,7 +189,14 @@ creationCategoryForm.addEventListener("submit", function(){
 getCategories.addEventListener("click", (e) => {
   e.currentTarget.setAttribute("class", "hide_this")
   alert("Let's get those categories!")
-  getIssueCategories();
+  categoryAdapter.fetchCategories()
+  .then(function(categoriesArray){
+    categoriesArray.forEach(function(category){
+      makeCategory.removeAttribute("id", "hide_this")
+      creationCategoryForm.innerHTML = ""  
+      getCategoriesIssue(category);
+    })
+  });
 });
 
 
