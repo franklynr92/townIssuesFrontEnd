@@ -5,6 +5,7 @@ let creationCategoryForm = document.querySelector(".creation_category_form")
 let divIssues = document.querySelector(".issues");
 let town = document.querySelector(".town");
 let categoryDiv = document.querySelector(".issue_category");
+const updateIssues = document.querySelector(".update_issue");
 let creationIssueForm = document.querySelector(".creation_issue_form");
 let currentIssues = document.querySelector("#current_issues");
 const issueUrl = "http://localhost:3000/issues";
@@ -109,10 +110,12 @@ alert(`You have added a Town${name}`)
 
 
 const addIssue = issue => {
+  issue
   let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
-  creationIssueForm.removeAttribute("id", "hidethis")
-  creationIssueForm.innerHTML +=`  
+  divIssues.removeAttribute("id", "hidethis")
+  divIssues.innerHTML = 
+  divIssues.innerHTML +=`  
   <div class="resolved" id=${issue.id}>
   <h3>Category: ${categoryName}</h3>
   <ul>Issue #${issue.id}
@@ -123,44 +126,20 @@ const addIssue = issue => {
   <li>Date: ${issue.date}</li>
   <li id="resolution">Resolved: ${issue.resolved}</li>
   </ul>
-  <div id="resolved>
-  <p id=${issue.id}>If Issue is Resolved click button</p>
+<div id="resolved">
+  <p id=${issue.id}>Click here to update an issue</p>
   <button type="button" class="btn btn-primary" class="resolved" id="issue-${issue.id}">Resolve Issue</button> 
 </div>
   </div>
   <br>
 `
 window.scrollTo(0,document.body.scrollHeight); 
-const resolvedIssue = document.querySelector(".resolved");
-resolvedIssue.addEventListener("click", function(e) {
-  if (document.querySelector(".resolved").lastElementChild.nodeName === "BUTTON")
-{console.log(e.currentTarget)
-  }  
-  debugger;
-//   let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
-//   creationIssueForm.innerHTML =`
-//   <h3>Enter Issue for ${categoryName}</h3>
-//   <form class="issues-form" id=${issue.category_id}>
-//     <input type="text" name="title" placeholder=${issue.title}/>
-//     <input type="text" name="description" placeholder=${issue.description}/>
-//     <input type="text" name="cross_street_1" placeholder=${issue.cross_street_1}/>
-//     <input type="text" name="cross_street_2" placeholder=${issue.cross_street_2}/>
-//     <input type="date" placeholder=${issue.date} name="date"/>
-//     <input type="submit" value="Add The Issue" />
-//     <input type="reset"/>
-//   </form>
-//   <br>
-//   <br>
-//   <hr>
-// `
+
   console.log(issue)
- window.scrollTo(0,document.body.scrollHeight);
+}
 
 
-})
 
-
-};
 
 
 
@@ -180,7 +159,6 @@ const submitCategory = category => {
 
 makeCategory.addEventListener("click", function(){
   categoryDiv.setAttribute("id", "hidethis");
-  creationIssueForm.setAttribute("id", "hidethis")
   divIssues.setAttribute("id", "hidethis")
   creation.setAttribute("id", "hidethis")
   categoryForm();
