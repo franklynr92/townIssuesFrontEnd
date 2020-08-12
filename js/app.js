@@ -10,21 +10,27 @@ let currentIssues = document.querySelector("#current_issues");
 const issueUrl = "http://localhost:3000/issues";
 const categoryUrl = "http://localhost:3000/categories";
 let getCategories = document.querySelector(".get_category")
-
+const categoryAdapter = new CategoriesAdapter("http://localhost:3000/categories");
 
 
 //functions 
-
+// getIssueCategories()
 
 const getIssueCategories = () =>{
 fetch(categoryUrl)
   .then(function(obj){
     return obj.json()
   })
-  .then(function (categoriesArray){
-    makeCategory.removeAttribute("id", "hide_this")
+// categoryAdapter.fetchCategories
+  .then(function(categoriesArray){
     categoriesArray.forEach(function(category){
+      makeCategory.removeAttribute("id", "hide_this")
       creationCategoryForm.innerHTML = ""  
+      getCategoriesIssue(category);
+    })
+  });
+
+  function getCategoriesIssue(category) {
       let divCard = document.createElement("div");
       divCard.setAttribute("id", `category-${category.id}`);
       divCard.setAttribute("class", "categories");
@@ -39,7 +45,6 @@ fetch(categoryUrl)
       type_of_issue.setAttribute("class", "btn btn-info");
       divCard.innerHTML += `<br><br>`;
       divIssues.removeAttribute("id", "hide_this")
-     
       divCard.addEventListener("click", (e) => {
         if (e.currentTarget.className === "categories"){
         divCategory = e.currentTarget;
@@ -51,10 +56,8 @@ fetch(categoryUrl)
         }
         }
       );
-    })
-  })
-};
-
+  }
+}
 
  const getTownIssues = () =>{
     fetch(issueUrl)
@@ -106,11 +109,11 @@ alert(`You have added a Town${name}`)
 
 
 const addIssue = issue => {
-let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
+  let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
   creationIssueForm.removeAttribute("id", "hidethis")
   creationIssueForm.innerHTML +=`  
-  <div id=${issue.id}>
+  <div class="resolved" id=${issue.id}>
   <h3>Category: ${categoryName}</h3>
   <ul>Issue #${issue.id}
   <p>Title: ${titleToUp}</p>
@@ -118,15 +121,48 @@ let categoryName =  document.getElementById(`category-${issue.category_id}`).inn
   <li>Cross street 1${issue.cross_street_1}</li>
   <li>Cross street 2${issue.cross_street_2}</li>
   <li>Date: ${issue.date}</li>
-  <li id="resolved">Resolved: ${issue.resolved}</li>
+  <li id="resolution">Resolved: ${issue.resolved}</li>
   </ul>
-   <!-- <p>If Issue is Resolved click button</p>
-   <button type="button" class="btn btn-primary" id="issue-${issue.id}">True</button> -->
+  <div id="resolved>
+  <p id=${issue.id}>If Issue is Resolved click button</p>
+  <button type="button" class="btn btn-primary" class="resolved" id="issue-${issue.id}">Resolve Issue</button> 
+</div>
   </div>
   <br>
 `
 window.scrollTo(0,document.body.scrollHeight); 
+const resolvedIssue = document.querySelector(".resolved");
+resolvedIssue.addEventListener("click", function(e) {
+  if (document.querySelector(".resolved").lastElementChild.nodeName === "BUTTON")
+{console.log(e.currentTarget)
+  }  
+  debugger;
+//   let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
+//   creationIssueForm.innerHTML =`
+//   <h3>Enter Issue for ${categoryName}</h3>
+//   <form class="issues-form" id=${issue.category_id}>
+//     <input type="text" name="title" placeholder=${issue.title}/>
+//     <input type="text" name="description" placeholder=${issue.description}/>
+//     <input type="text" name="cross_street_1" placeholder=${issue.cross_street_1}/>
+//     <input type="text" name="cross_street_2" placeholder=${issue.cross_street_2}/>
+//     <input type="date" placeholder=${issue.date} name="date"/>
+//     <input type="submit" value="Add The Issue" />
+//     <input type="reset"/>
+//   </form>
+//   <br>
+//   <br>
+//   <hr>
+// `
+  console.log(issue)
+ window.scrollTo(0,document.body.scrollHeight);
+
+
+})
+
+
 };
+
+
 
 const submitCategory = category => {
     let postData = {
@@ -139,7 +175,7 @@ const submitCategory = category => {
     };
     return fetch(categoryUrl, postData)
     .then(resp => resp.json())
-    .then(getIssueCategories())
+    .then(getCategoriesIssue())
   } 
 
 makeCategory.addEventListener("click", function(){
@@ -150,6 +186,8 @@ makeCategory.addEventListener("click", function(){
   categoryForm();
   
 })
+
+
 
 creationCategoryForm.addEventListener("submit", function(){
   event.preventDefault();
