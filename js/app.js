@@ -1,5 +1,5 @@
 //variables
-let creation = document.querySelector(".creation");
+// let creation = document.querySelector(".creation");
 let makeCategory = document.querySelector(".make_category");
 let creationCategoryForm = document.querySelector(".creation_category_form")
 let divIssues = document.querySelector(".issues");
@@ -40,7 +40,7 @@ function getCategoriesIssue(category) {
         categoryDiv.setAttribute("class",  "hide_this");
         let categoryId = e.currentTarget.getAttribute("id").charAt(9);
         let categoryName = e.currentTarget.innerText;
-        changeBtn(categoryId, categoryName)
+        addIssueToCategory(categoryId, categoryName)
         }
         }
       );
@@ -66,7 +66,7 @@ const categoryForm = () => {
 `
 }
 
-const changeBtn = (categoryId, categoryName) => {
+const addIssueToCategory = (categoryId, categoryName) => {
   creationIssueForm.innerHTML += `
   <h3>Enter Issue for ${categoryName}</h3>
   <form class="issues-form" id=${categoryId}>
@@ -114,6 +114,9 @@ const addIssue = issue => {
   <p id=${issue.id}>Click here to view a single issue</p>
   <button type="button" class="btn btn-primary" class="resolved" id="issue-${issue.id}">View issue # ${issue.id}</button> 
 </div>
+<div id="make an issue">
+<p>Click on a category to create an issue for that category</p>
+</div>
   </div>
   <br>
 `
@@ -157,13 +160,12 @@ const submitCategory = category => {
     };
     return fetch(categoryUrl, postData)
     .then(resp => resp.json())
-    .then(getCategoriesIssue())
+    .then(categoryAdapter.fetchCategories())
   } 
 
 makeCategory.addEventListener("click", function(){
   categoryDiv.setAttribute("id", "hidethis");
   divIssues.setAttribute("id", "hidethis")
-  creation.setAttribute("id", "hidethis")
   categoryForm();
   
 })
@@ -188,13 +190,6 @@ getCategories.addEventListener("click", (e) => {
   e.currentTarget.setAttribute("class", "hide_this")
   alert("Let's get those categories!")
   categoryAdapter.fetchCategories()
-  .then(function(categoriesArray){
-    categoriesArray.forEach(function(category){
-      makeCategory.removeAttribute("id", "hide_this")
-      creationCategoryForm.innerHTML = ""  
-      getCategoriesIssue(category);
-    })
-  });
 });
 
 
