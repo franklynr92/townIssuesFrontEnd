@@ -9,14 +9,16 @@
 }
 
 body{
-    border: 1em dotted transparent;
-    padding: 15px;
-    border-color: cadetblue;
+    border: .5em solid transparent;
+    border-width: .3em;
+    padding: 10px;
+    border-color: #610d83;
 }
 
 .welcome {
     margin-top: .5em;
-    border: .5em solid transparent;
+    border: .4em dotted transparent;
+    border-width: .1em;
     padding: 15px;
     border-color: #0E14C2;
     text-align: center;
