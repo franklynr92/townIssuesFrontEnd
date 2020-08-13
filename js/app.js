@@ -125,10 +125,6 @@ const addIssue = issue => {
 window.scrollTo(0,document.body.scrollHeight); 
 const resolvedIssues = document.querySelectorAll("#resolved");
 
-resolvedIssues.forEach(resolvedIssue => resolvedIssue.addEventListener("click", (e)=>{
-  console.log(e.currentTarget)
-  debugger;
-
 }))
   
   
