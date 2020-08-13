@@ -7,3 +7,30 @@
 .hide_this {
     display: none;
 }
+
+body{
+    border: 1em dotted transparent;
+    padding: 15px;
+    border-color: cadetblue;
+}
+
+.welcome {
+    margin-top: .5em;
+    border: .5em solid transparent;
+    padding: 15px;
+    border-color: cadetblue;
+}
+
+#change {
+    color: firebrick;
+    font-weight: bold;
+}
+
+.heading {
+    margin-top: 1em;
+    background-color: floralwhite;
+    width: 15em;
+    border: .1em dotted transparent;
+    padding: 5px;
+    border-color: firebrick;
+}
