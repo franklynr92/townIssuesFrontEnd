@@ -233,26 +233,3 @@ return fetch(`http://localhost:3000/issues`, postData)
 
 .catch(() => alert("Something went wrong"))
 };
-
-
-
-   
-// );
-//select it
-//listen to it
-//then you have to do it
-//select it again
-//push it through 
-//dataset
-
-
-//when user clicks on button to `create issue` an event is triggerd []
-// the event will then either go to a function and create form || create form right after event listener []
-// form will have input for issue name []
-
-
-    
-   
-
-
- 
