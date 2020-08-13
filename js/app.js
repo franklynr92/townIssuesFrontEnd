@@ -15,11 +15,6 @@ const categoryAdapter = new CategoriesAdapter("http://localhost:3000/categories"
 
 //functions 
 
-// const getIssueCategories = () =>{
-// fetch(categoryUrl)
-//   .then(function(obj){
-//     return obj.json()
-//   })
 
 
 
