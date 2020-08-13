@@ -68,7 +68,7 @@ const categoryForm = () => {
 
 const addIssueToCategory = (categoryId, categoryName) => {
   creationIssueForm.innerHTML += `
-  <h3>Enter Issue for ${categoryName}</h3>
+  <h3 class="heading">Enter Issue for ${categoryName}</h3>
   <form class="issues-form" id=${categoryId}>
     <input type="text" name="title" placeholder="title"/>
     <input type="text" name="description" placeholder="description of issue"/>
