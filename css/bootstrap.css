@@ -4342,7 +4342,7 @@ input[type="button"].btn-block {
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
-  
+
 }
 
 
@@ -6772,7 +6772,7 @@ button.bg-danger:focus {
 }
 
 .bg-light {
-  background-color: #f8f9fa !important;
+  background-color: bisque !important;
 }
 
 a.bg-light:hover, a.bg-light:focus,
