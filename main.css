@@ -30,7 +30,17 @@ body{
     margin-top: 1em;
     background-color: floralwhite;
     width: 15em;
-    border: .1em dotted transparent;
+    border: .1em solid transparent;
     padding: 5px;
     border-color: firebrick;
+    color: cornflowerblue
+}
+
+div.resolved{
+    background: bisque ;
+    width: 30em;
+}
+
+div.resolved h3  {
+    color: darkgoldenrod;
 }
