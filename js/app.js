@@ -14,6 +14,8 @@ const getIssueBtn = divIssues.querySelector("BUTTON")
 const issueUrl = "http://localhost:3000/issues";
 const categoryUrl = "http://localhost:3000/categories";
 let getCategories = document.querySelector(".get_category")
+const displayIssues = document.querySelector(".display_issue");
+const displayCategories = document.querySelector(".display_category");
 const categoryAdapter = new CategoriesAdapter("http://localhost:3000/categories");
 
 //functions 
@@ -57,6 +59,7 @@ function getCategoriesIssue(category) {
   };
 
 const categoryForm = () => {
+getCategories.removeAttribute("class", "hide_this");
   creationCategoryForm.innerHTML = `
     <form id="category-form">
       <input type="text" name="type_of_issue" placeholder="type of category"/> 
@@ -65,6 +68,11 @@ const categoryForm = () => {
     </form>
 `
 }
+
+getCategories.addEventListener("click", () =>{
+  divIssues.removeAttribute("id", "hidethis");
+  categoryDiv.removeAttribute("id", "hidethis");
+})
 
 const addIssueToCategory = (categoryId, categoryName) => {
   creationIssueForm.innerHTML += `
