@@ -18,11 +18,11 @@ body{
     margin-top: .5em;
     border: .5em solid transparent;
     padding: 15px;
-    border-color: cadetblue;
+    border-color: #0E14C2;
     text-align: center;
     color: cadetblue;
     text-decoration: underline;
-    text-decoration-color: deepskyblue;
+    text-decoration-color: #5D0EC2;
 }
 
 #change {
@@ -37,7 +37,7 @@ body{
     border: .1em solid transparent;
     padding: 5px;
     border-color: firebrick;
-    color: cornflowerblue
+    color: cornflowerblue;
 }
 
 div.resolved{
@@ -54,6 +54,14 @@ div.issue h3{
 }
 
 div.issue {
-    background-color: silver;
+    background-color: #F5C318;
+    color: maroon;
     width: 30em;
+}
+
+img {
+    opacity: 0.2;
+}
+.creation_issue_form {
+    
 }

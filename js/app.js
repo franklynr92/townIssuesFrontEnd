@@ -130,6 +130,7 @@ resolvedIssues.forEach(resolvedIssue => resolvedIssue.addEventListener("click", 
 }
 
 function showIssue(resolvingIssue) {
+
   singleIssue.innerHTML = resolvingIssue.innerHTML;
   singleIssue.querySelector("BUTTON").innerText = "View all Issues"
   let pTag = singleIssue.querySelector("DIV").firstElementChild;
