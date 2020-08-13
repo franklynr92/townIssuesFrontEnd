@@ -8,15 +8,15 @@ let categoryDiv = document.querySelector(".issue_category");
 const updateIssues = document.querySelector(".update_issue");
 let creationIssueForm = document.querySelector(".creation_issue_form");
 let currentIssues = document.querySelector("#current_issues");
+const editIssue = document.querySelector(".edit_form");
+const singleIssue = document.querySelector(".issue");
+const getIssueBtn = divIssues.querySelector("BUTTON")
 const issueUrl = "http://localhost:3000/issues";
 const categoryUrl = "http://localhost:3000/categories";
 let getCategories = document.querySelector(".get_category")
 const categoryAdapter = new CategoriesAdapter("http://localhost:3000/categories");
 
 //functions 
-
-
-
 
 function getCategoriesIssue(category) {
       let divCard = document.createElement("div");
@@ -47,14 +47,14 @@ function getCategoriesIssue(category) {
   }
 
 
-//  const getTownIssues = () =>{
-//     fetch(issueUrl)
-//   .then(function(obj){
-//     return obj.json()
-//   })
-//   .then(function (issuesArray){
-//     issuesArray.forEach(issue => addIssue(issue))});
-//   };
+ const getTownIssues = () =>{
+    fetch(issueUrl)
+  .then(function(obj){
+    return obj.json()
+  })
+  .then(function (issuesArray){
+    issuesArray.forEach(issue => addIssue(issue))});
+  };
 
 const categoryForm = () => {
   creationCategoryForm.innerHTML = `
@@ -94,7 +94,7 @@ alert(`You have added a Town${name}`)
 
 
 const addIssue = issue => {
-  // issue
+ getIssueBtn.setAttribute("id", "hidethis");
   let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
   divIssues.removeAttribute("id", "hidethis")
@@ -111,30 +111,39 @@ const addIssue = issue => {
   <li id="resolution">Resolved: ${issue.resolved}</li>
   </ul>
 <div id="resolved">
-  <p id=${issue.id}>Click here to update an issue</p>
-  <button type="button" class="btn btn-primary" class="resolved" id="issue-${issue.id}">Resolve Issue</button> 
+  <p id=${issue.id}>Click here to view a single issue</p>
+  <button type="button" class="btn btn-primary" class="resolved" id="issue-${issue.id}">View issue # ${issue.id}</button> 
 </div>
   </div>
   <br>
 `
 window.scrollTo(0,document.body.scrollHeight); 
-const resolvedIssues = document.querySelectorAll("#resolved");
+const resolvedIssues = document.querySelectorAll(".resolved");
+resolvedIssues.forEach(resolvedIssue => resolvedIssue.addEventListener("click", (e) => {
+  const resolvingIssue = e.currentTarget;
+ showIssue(resolvingIssue)
 
 }))
-  
-  
 }
 
+function showIssue(resolvingIssue) {
+  singleIssue.innerHTML = resolvingIssue.innerHTML;
+  singleIssue.querySelector("BUTTON").innerText = "View all Issues"
+  let pTag = singleIssue.querySelector("DIV").firstElementChild;
+  pTag.innerText = "Click here to view all issues";
+  divIssues.setAttribute("id", "hidethis")
+  singleIssue.addEventListener("click", () => {
+  viewAllIssues();
+  })
 
-
-// resolvedIssue.addEventListener("click", (e) => {
-//   console.log(e.currentTarget)
-//   // divIssues.setAttribute("id", "hidethis")
-//   // updateIssues.removeAttribute("id", "hidethis")
-//   // console.log(issue)
-// })
-
-
+} 
+function viewAllIssues(){
+  divIssues.removeAttribute("id", "hidethis");
+  singleIssue.setAttribute('id', 'hidethis');
+  divIssues.addEventListener("click", () =>{
+    singleIssue.removeAttribute("id", "hidethis")
+  })
+}
 
 
 const submitCategory = category => {
@@ -170,7 +179,6 @@ creationCategoryForm.addEventListener("submit", function(){
 })
 
  currentIssues.addEventListener("click", function(){
-  // divIssues.setAttribute("id", "hidethis")
   creationIssueForm.innerHTML = ""
   alert("Let's get those issues!")
   getTownIssues();
@@ -196,7 +204,7 @@ creationIssueForm.addEventListener("submit", (e) => {
 
 //event listener
 
-const editIssueHandler = e  =>{
+const editIssueHandler = e =>{
   e.preventDefault();
     let titleInput =  document.querySelector("[name='title']").value;
     let descriptionInput = document.querySelector("[name='description']").value;
