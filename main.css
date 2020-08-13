@@ -19,6 +19,10 @@ body{
     border: .5em solid transparent;
     padding: 15px;
     border-color: cadetblue;
+    text-align: center;
+    color: cadetblue;
+    text-decoration: underline;
+    text-decoration-color: deepskyblue;
 }
 
 #change {
@@ -43,4 +47,13 @@ div.resolved{
 
 div.resolved h3  {
     color: darkgoldenrod;
+}
+
+div.issue h3{
+    color: rgba(250, 250, 250, .5);
+}
+
+div.issue {
+    background-color: silver;
+    width: 30em;
 }
