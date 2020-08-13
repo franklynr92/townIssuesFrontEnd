@@ -173,7 +173,6 @@ creationCategoryForm.addEventListener("submit", function(){
   // divIssues.setAttribute("id", "hidethis")
   creationIssueForm.innerHTML = ""
   alert("Let's get those issues!")
-
   getTownIssues();
 });
 
