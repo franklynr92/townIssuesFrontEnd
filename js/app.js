@@ -1,5 +1,4 @@
 //variables
-// let creation = document.querySelector(".creation");
 let makeCategory = document.querySelector(".make_category");
 let creationCategoryForm = document.querySelector(".creation_category_form")
 let divIssues = document.querySelector(".issues");
@@ -16,47 +15,46 @@ const categoryUrl = "http://localhost:3000/categories";
 let getCategories = document.querySelector(".get_category")
 const displayIssues = document.querySelector(".display_issue");
 const displayCategories = document.querySelector(".display_category");
-const categoryAdapter = new CategoriesAdapter("http://localhost:3000/categories");
+// const categoryAdapter = new CategoryAdapter("http://localhost:3000/categories");
 
 //functions 
 
 function getCategoriesIssue(category) {
-      let divCard = document.createElement("div");
-      divCard.setAttribute("id", `category-${category.id}`);
-      divCard.setAttribute("class", "categories");
-      let type_of_issue = document.createElement("BUTTON");
-      categoryDiv.appendChild(divCard);
-      categoryDiv.removeAttribute("id", "hidethis");
-      let ul = document.createElement("ul");
-      ul.appendChild(type_of_issue)
-      divCard.appendChild(ul);
-      type_of_issue.innerText = category.type_of_issue;
-      type_of_issue.setAttribute("id", `${category.id}`);
-      type_of_issue.setAttribute("class", "btn btn-info");
-      divCard.innerHTML += `<br><br>`;
-      divIssues.removeAttribute("id", "hide_this")
-      divCard.addEventListener("click", (e) => {
-        if (e.currentTarget.className === "categories"){
-        divCategory = e.currentTarget;
-        divCategory.setAttribute("class", "hide_this");
-        categoryDiv.setAttribute("class",  "hide_this");
-        let categoryId = e.currentTarget.getAttribute("id").charAt(9);
-        let categoryName = e.currentTarget.innerText;
-        addIssueToCategory(categoryId, categoryName)
-        }
-        }
-      );
-  }
+  let divCard = document.createElement("div");
+  divCard.setAttribute("id", `category-${category.id}`);
+  divCard.setAttribute("class", "categories");
+  let type_of_issue = document.createElement("BUTTON");
+  categoryDiv.appendChild(divCard);
+  categoryDiv.removeAttribute("id", "hidethis");
+  let ul = document.createElement("ul");
+  ul.appendChild(type_of_issue)
+  divCard.appendChild(ul);
+  type_of_issue.innerText = category.type_of_issue;
+  type_of_issue.setAttribute("id", `${category.id}`);
+  type_of_issue.setAttribute("class", "btn btn-info");
+  divCard.innerHTML += `<br><br>`;
+  divIssues.removeAttribute("id", "hide_this")
+  divCard.addEventListener("click", (e) => {
+    if (e.currentTarget.className === "categories"){
+    divCategory = e.currentTarget;
+    divCategory.setAttribute("class", "hide_this");
+    categoryDiv.setAttribute("class",  "hide_this");
+    let categoryId = e.currentTarget.getAttribute("id").charAt(9);
+    let categoryName = e.currentTarget.innerText;
+    addIssueToCategory(categoryId, categoryName)
+    }
+    }
+  );
+}
 
-
- const getTownIssues = () =>{
+const getTownIssues = () =>{
     fetch(issueUrl)
   .then(function(obj){
     return obj.json()
   })
   .then(function (issuesArray){
     issuesArray.forEach(issue => addIssue(issue))});
-  };
+};
 
 const categoryForm = () => {
 getCategories.removeAttribute("class", "hide_this");
@@ -90,8 +88,13 @@ const addIssueToCategory = (categoryId, categoryName) => {
   <br>
   <hr>
 `
- window.scrollTo(0,document.body.scrollHeight);
+// displayCategories.removeAttribute("id", "hidethis");
+window.scrollTo(0,document.body.scrollHeight);
 }
+
+displayCategories.addEventListener('click', () => {
+  
+})
 
 
 const addTownName = name => {
@@ -105,8 +108,8 @@ const addIssue = issue => {
  getIssueBtn.setAttribute("id", "hidethis");
   let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
-  divIssues.removeAttribute("id", "hidethis")
-  divIssues.innerHTML = 
+  divIssues.removeAttribute("id", "hidethis");
+  divIssues.innerHTML = "";
   divIssues.innerHTML +=`  
   <div class="resolved" id=${issue.id}>
   <h3>Category: ${categoryName}</h3>
@@ -132,7 +135,7 @@ window.scrollTo(0,document.body.scrollHeight);
 const resolvedIssues = document.querySelectorAll(".resolved");
 resolvedIssues.forEach(resolvedIssue => resolvedIssue.addEventListener("click", (e) => {
   const resolvingIssue = e.currentTarget;
- showIssue(resolvingIssue)
+showIssue(resolvingIssue)
 
 }))
 }
@@ -158,19 +161,9 @@ function viewAllIssues(){
 }
 
 
-const submitCategory = category => {
-    let postData = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(category)
-    };
-    return fetch(categoryUrl, postData)
-    .then(resp => resp.json())
-    .then(categoryAdapter.fetchCategories())
-  } 
+
+
+
 
 makeCategory.addEventListener("click", function(){
   categoryDiv.setAttribute("id", "hidethis");
@@ -179,6 +172,13 @@ makeCategory.addEventListener("click", function(){
   
 })
 
+function triggerSubmitFetch(category){
+  CategoryAdapter.submitCategory(category)
+  .then(resp => resp.json())
+  .then(category => getCategoriesIssue(category))
+  .then(function(){creationCategoryForm.innerHTML = "" })
+  .catch(() => alert("Something went wrong"))
+}
 
 
 creationCategoryForm.addEventListener("submit", function(){
@@ -186,10 +186,9 @@ creationCategoryForm.addEventListener("submit", function(){
   let category = { 
     type_of_issue:document.querySelector("[name='type_of_issue']").value
   }
-  submitCategory(category)
+triggerSubmitFetch(category);
 })
-
- currentIssues.addEventListener("click", function(){
+currentIssues.addEventListener("click", function(){
   creationIssueForm.innerHTML = ""
   alert("Let's get those issues!")
   getTownIssues();
@@ -198,7 +197,7 @@ creationCategoryForm.addEventListener("submit", function(){
 getCategories.addEventListener("click", (e) => {
   e.currentTarget.setAttribute("class", "hide_this")
   alert("Let's get those categories!")
-  categoryAdapter.fetchCategories()
+  CategoryAdapter.fetchCategories()
 });
 
 
@@ -232,7 +231,7 @@ function submitIssue(title, description, cross_street_1, cross_street_2, date, i
   category_id: id
   }
 let postData = {
-  method: "POST",
+  method: "POST", 
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json"
@@ -242,6 +241,5 @@ let postData = {
 return fetch(`http://localhost:3000/issues`, postData)
 .then(resp => resp.json())
  .then (issue => addIssue(issue))
-
 .catch(() => alert("Something went wrong"))
 };
