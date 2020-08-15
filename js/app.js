@@ -150,8 +150,8 @@ function showIssue(resolvingIssue) {
   singleIssue.addEventListener("click", () => {
   viewAllIssues();
   })
-
 } 
+
 function viewAllIssues(){
   divIssues.removeAttribute("id", "hidethis");
   singleIssue.setAttribute('id', 'hidethis');
@@ -159,11 +159,6 @@ function viewAllIssues(){
     singleIssue.removeAttribute("id", "hidethis")
   })
 }
-
-
-
-
-
 
 makeCategory.addEventListener("click", function(){
   categoryDiv.setAttribute("id", "hidethis");
