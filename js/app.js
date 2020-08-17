@@ -117,7 +117,6 @@ creationIssueForm.addEventListener("click", (e) =>{
 }
 
 
-
 const addIssue = issue => {
 let getIssueBtn = divIssues.querySelector("BUTTON")
 getIssueBtn.setAttribute("class", "hidethis");
