@@ -20,11 +20,6 @@ let getCategories = document.querySelector(".get_category")
 const getCategoriesParent = getCategories.parentElement;
 const displayIssues = document.querySelector(".display_issue");
 const displayCategories = document.querySelector(".display_category");
-// const retrieveCategories = document.querySelector("#retrieve_categories")
-// const retrieveCategoriesParent = retrieveCategories.parentElement;
-
-
-// const categoryAdapter = new CategoryAdapter("http://localhost:3000/categories");
 
 //functions 
 
@@ -47,7 +42,6 @@ function getCategoriesIssue(category) {
     if (e.currentTarget.className === "categories"){
     divCategoryChild = e.currentTarget;
     categoryDivParent.setAttribute("class", "hidethis");
-    // retrieveCategoriesParent.removeAttribute("class", "hidethis")
     let categoryId = divCategoryChild.getAttribute("id").charAt(9);
     let categoryName = divCategoryChild.innerText;
     addIssueToCategory(categoryId, categoryName)
@@ -66,7 +60,7 @@ const getTownIssues = () =>{
 };
 
 const categoryForm = () => {
-// getCategoriesParent.removeAttribute("class", "hidethis");
+
 
   creationCategoryForm.innerHTML = `
     <form id="category-form">
@@ -75,15 +69,9 @@ const categoryForm = () => {
       <input type="reset"/>
     </form>
 `
-// retrieveCategories.addEventListener("click", () =>{
-//   displayCat();
-  
-
-// })
 }
 
 function displayCat(){
-  // retrieveCategoriesParent.setAttribute("class", "hidethis")
   getCategoriesParent.setAttribute("class", "hidethis")
   categoryDivParent.removeAttribute("class", "hidethis");
   divIssuesParent.removeAttribute("class", "hidethis")
@@ -204,7 +192,7 @@ function triggerSubmitFetch(category){
   .catch(() => alert("Something went wrong"))
 }
 
-
+//event listener
 creationCategoryForm.addEventListener("submit", function(){
   event.preventDefault();
   let category = { 
@@ -229,7 +217,7 @@ creationIssueForm.addEventListener("submit", (e) => {
   editIssueHandler(e)
 });
 
-//event listener
+
 
 const editIssueHandler = e =>{
   e.preventDefault();
