@@ -113,14 +113,6 @@ creationIssueForm.addEventListener("click", (e) =>{
 
 
 
-
-const addTownName = name => {
-town.innerHTML += `<h3>${name}</h3>`
-alert(`You have added a Town${name}`)
-};
-
-
-
 const addIssue = issue => {
 let getIssueBtn = divIssues.querySelector("BUTTON")
 getIssueBtn.setAttribute("class", "hidethis");
