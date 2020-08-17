@@ -23,6 +23,15 @@ const displayCategories = document.querySelector(".display_category");
 
 //functions 
 
+
+function triggerSubmitFetch(category){
+  CategoryAdapter.submitCategory(category)
+  .then(resp => resp.json())
+  .then(category => getCategoriesIssue(category))
+  .then(function(){creationCategoryForm.innerHTML = "" })
+  .catch(() => alert("Something went wrong"))
+}
+
 function getCategoriesIssue(category) {
   categoryDivParent.removeAttribute("class", "hidethis");
   let divCard = document.createElement("div");
@@ -78,10 +87,6 @@ function displayCat(){
   
 }
 
-getCategories.addEventListener("click", () =>{
-  divIssuesParent.removeAttribute("class", "hidethis");
-  categoryDivParent.removeAttribute("class", "hidethis");
-})
 
 const addIssueToCategory = (categoryId, categoryName) => {
   
@@ -145,9 +150,46 @@ const resolvedIssues = document.querySelectorAll(".resolved");
 resolvedIssues.forEach(resolvedIssue => resolvedIssue.addEventListener("click", (e) => {
   const resolvingIssue = e.currentTarget;
 showIssue(resolvingIssue)
-
-}))
+  }))
 }
+
+const editIssueHandler = e =>{
+  e.preventDefault();
+    let titleInput =  document.querySelector("[name='title']").value;
+    let descriptionInput = document.querySelector("[name='description']").value;
+    let cross_street_1Input = document.querySelector("[name='cross_street_1']").value;
+    let cross_street_2Input = document.querySelector("[name='cross_street_2']").value;
+    let dateInput = document.querySelector("[name='date']").value
+    let categoryInput = e.currentTarget.querySelector("form").getAttribute("id");
+    creationIssueForm.innerHTML = "";
+    categoryDiv.removeAttribute("class", "hidethis")
+    divIssues.removeAttribute("class", "hidethis")
+  submitIssue(titleInput, descriptionInput, cross_street_1Input, cross_street_2Input, dateInput, categoryInput);
+}
+
+function submitIssue(title, description, cross_street_1, cross_street_2, date, id){
+issue = {
+  title: title,
+  description: description,
+  cross_street_1: cross_street_1,
+  cross_street_2: cross_street_2,
+  date: date,
+  category_id: id
+  }
+let postData = {
+  method: "POST", 
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  body: JSON.stringify(issue)
+};
+return fetch(`http://localhost:3000/issues`, postData)
+.then(resp => resp.json())
+.then(divIssues.innerHTML = "")
+ .then (issue => addIssue(issue))
+.catch(() => alert("Something went wrong"))
+};
 
 function showIssue(resolvingIssue) {
   singleIssue.innerHTML = resolvingIssue.innerHTML;
@@ -168,6 +210,11 @@ function viewAllIssues(){
   })
 }
 
+
+
+
+
+//event listener
 makeCategory.addEventListener("click", function(){
   categoryDivParent.setAttribute("class", "hidethis");
   divIssuesParent.setAttribute("class", "hidethis")
@@ -176,15 +223,11 @@ makeCategory.addEventListener("click", function(){
   
 })
 
-function triggerSubmitFetch(category){
-  CategoryAdapter.submitCategory(category)
-  .then(resp => resp.json())
-  .then(category => getCategoriesIssue(category))
-  .then(function(){creationCategoryForm.innerHTML = "" })
-  .catch(() => alert("Something went wrong"))
-}
+getCategories.addEventListener("click", () =>{
+  divIssuesParent.removeAttribute("class", "hidethis");
+  categoryDivParent.removeAttribute("class", "hidethis");
+})
 
-//event listener
 creationCategoryForm.addEventListener("submit", function(){
   event.preventDefault();
   let category = { 
@@ -211,40 +254,3 @@ creationIssueForm.addEventListener("submit", (e) => {
 
 
 
-const editIssueHandler = e =>{
-  e.preventDefault();
-    let titleInput =  document.querySelector("[name='title']").value;
-    let descriptionInput = document.querySelector("[name='description']").value;
-    let cross_street_1Input = document.querySelector("[name='cross_street_1']").value;
-    let cross_street_2Input = document.querySelector("[name='cross_street_2']").value;
-    let dateInput = document.querySelector("[name='date']").value
-    let categoryInput = e.currentTarget.querySelector("form").getAttribute("id");
-    creationIssueForm.innerHTML = "";
-    categoryDiv.removeAttribute("class", "hidethis")
-    divIssues.removeAttribute("class", "hidethis")
-  submitIssue(titleInput, descriptionInput, cross_street_1Input, cross_street_2Input, dateInput, categoryInput);
-}
-
-function submitIssue(title, description, cross_street_1, cross_street_2, date, id){
- issue = {
-  title: title,
-  description: description,
-  cross_street_1: cross_street_1,
-  cross_street_2: cross_street_2,
-  date: date,
-  category_id: id
-  }
-let postData = {
-  method: "POST", 
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-  },
-  body: JSON.stringify(issue)
-};
-return fetch(`http://localhost:3000/issues`, postData)
-.then(resp => resp.json())
-.then(divIssues.innerHTML = "")
- .then (issue => addIssue(issue))
-.catch(() => alert("Something went wrong"))
-};
