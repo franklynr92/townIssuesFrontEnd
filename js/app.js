@@ -109,11 +109,11 @@ const addIssueToCategory = (categoryId, categoryName) => {
 
 window.scrollTo(0,document.body.scrollHeight);
 
-creationIssueForm.addEventListener("click", (e) =>{
-  e.currentTarget.innerText = "";
-  alert("Let's get those categories!")
-  CategoryAdapter.fetchCategories()
-})
+// creationIssueForm.addEventListener("click", (e) =>{
+//   e.currentTarget.innerText = "";
+//   alert("Let's get those categories!")
+//   CategoryAdapter.fetchCategories()
+// })
 }
 
 
@@ -185,8 +185,7 @@ let postData = {
 };
 return fetch(`http://localhost:3000/issues`, postData)
 .then(resp => resp.json())
-.then(divIssues.innerHTML = "")
- .then (issue => addIssue(issue))
+.then (getTownIssues())
 .catch(() => alert("Something went wrong"))
 };
 
