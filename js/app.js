@@ -1,31 +1,40 @@
 //variables
 let makeCategory = document.querySelector(".make_category");
+const makeCategoryParent = makeCategory.parentElement;
 let creationCategoryForm = document.querySelector(".creation_category_form")
-let divIssues = document.querySelector(".issues");
+let divIssues = document.querySelector("#issues");
+const divIssuesParent = divIssues.parentElement;
 let town = document.querySelector(".town");
 let categoryDiv = document.querySelector(".issue_category");
+const categoryDivParent = categoryDiv.parentElement
 const updateIssues = document.querySelector(".update_issue");
 let creationIssueForm = document.querySelector(".creation_issue_form");
 let currentIssues = document.querySelector("#current_issues");
 const editIssue = document.querySelector(".edit_form");
 const singleIssue = document.querySelector(".issue");
-const getIssueBtn = divIssues.querySelector("BUTTON")
+const singleIssueParent = singleIssue.parentElement;
+
 const issueUrl = "http://localhost:3000/issues";
 const categoryUrl = "http://localhost:3000/categories";
 let getCategories = document.querySelector(".get_category")
+const getCategoriesParent = getCategories.parentElement;
 const displayIssues = document.querySelector(".display_issue");
 const displayCategories = document.querySelector(".display_category");
+// const retrieveCategories = document.querySelector("#retrieve_categories")
+// const retrieveCategoriesParent = retrieveCategories.parentElement;
+
+
 // const categoryAdapter = new CategoryAdapter("http://localhost:3000/categories");
 
 //functions 
 
 function getCategoriesIssue(category) {
+  categoryDivParent.removeAttribute("class", "hidethis");
   let divCard = document.createElement("div");
   divCard.setAttribute("id", `category-${category.id}`);
   divCard.setAttribute("class", "categories");
   let type_of_issue = document.createElement("BUTTON");
   categoryDiv.appendChild(divCard);
-  categoryDiv.removeAttribute("id", "hidethis");
   let ul = document.createElement("ul");
   ul.appendChild(type_of_issue)
   divCard.appendChild(ul);
@@ -33,14 +42,14 @@ function getCategoriesIssue(category) {
   type_of_issue.setAttribute("id", `${category.id}`);
   type_of_issue.setAttribute("class", "btn btn-info");
   divCard.innerHTML += `<br><br>`;
-  divIssues.removeAttribute("id", "hide_this")
+  divIssuesParent.removeAttribute("class", "hidethis")
   divCard.addEventListener("click", (e) => {
     if (e.currentTarget.className === "categories"){
-    divCategory = e.currentTarget;
-    divCategory.setAttribute("class", "hide_this");
-    categoryDiv.setAttribute("class",  "hide_this");
-    let categoryId = e.currentTarget.getAttribute("id").charAt(9);
-    let categoryName = e.currentTarget.innerText;
+    divCategoryChild = e.currentTarget;
+    categoryDivParent.setAttribute("class", "hidethis");
+    // retrieveCategoriesParent.removeAttribute("class", "hidethis")
+    let categoryId = divCategoryChild.getAttribute("id").charAt(9);
+    let categoryName = divCategoryChild.innerText;
     addIssueToCategory(categoryId, categoryName)
     }
     }
@@ -57,7 +66,8 @@ const getTownIssues = () =>{
 };
 
 const categoryForm = () => {
-getCategories.removeAttribute("class", "hide_this");
+// getCategoriesParent.removeAttribute("class", "hidethis");
+
   creationCategoryForm.innerHTML = `
     <form id="category-form">
       <input type="text" name="type_of_issue" placeholder="type of category"/> 
@@ -65,14 +75,28 @@ getCategories.removeAttribute("class", "hide_this");
       <input type="reset"/>
     </form>
 `
+// retrieveCategories.addEventListener("click", () =>{
+//   displayCat();
+  
+
+// })
+}
+
+function displayCat(){
+  // retrieveCategoriesParent.setAttribute("class", "hidethis")
+  getCategoriesParent.setAttribute("class", "hidethis")
+  categoryDivParent.removeAttribute("class", "hidethis");
+  divIssuesParent.removeAttribute("class", "hidethis")
+  
 }
 
 getCategories.addEventListener("click", () =>{
-  divIssues.removeAttribute("id", "hidethis");
-  categoryDiv.removeAttribute("id", "hidethis");
+  divIssuesParent.removeAttribute("class", "hidethis");
+  categoryDivParent.removeAttribute("class", "hidethis");
 })
 
 const addIssueToCategory = (categoryId, categoryName) => {
+  
   creationIssueForm.innerHTML += `
   <h3 class="heading">Enter Issue for ${categoryName}</h3>
   <form class="issues-form" id=${categoryId}>
@@ -87,14 +111,19 @@ const addIssueToCategory = (categoryId, categoryName) => {
   <br>
   <br>
   <hr>
+  <button type="button" class="btn btn-primary">Display Categories</button>
 `
-// displayCategories.removeAttribute("id", "hidethis");
+
 window.scrollTo(0,document.body.scrollHeight);
+
+creationIssueForm.addEventListener("click", (e) =>{
+  e.currentTarget.innerText = "";
+  alert("Let's get those categories!")
+  CategoryAdapter.fetchCategories()
+})
 }
 
-displayCategories.addEventListener('click', () => {
-  
-})
+
 
 
 const addTownName = name => {
@@ -105,11 +134,11 @@ alert(`You have added a Town${name}`)
 
 
 const addIssue = issue => {
- getIssueBtn.setAttribute("id", "hidethis");
+let getIssueBtn = divIssues.querySelector("BUTTON")
+getIssueBtn.setAttribute("class", "hidethis");
   let categoryName =  document.getElementById(`category-${issue.category_id}`).innerText;
   let titleToUp = issue.title.toUpperCase();
-  divIssues.removeAttribute("id", "hidethis");
-  divIssues.innerHTML = "";
+  divIssuesParent.removeAttribute("class", "hidethis");
   divIssues.innerHTML +=`  
   <div class="resolved" id=${issue.id}>
   <h3>Category: ${categoryName}</h3>
@@ -141,28 +170,28 @@ showIssue(resolvingIssue)
 }
 
 function showIssue(resolvingIssue) {
-
   singleIssue.innerHTML = resolvingIssue.innerHTML;
   singleIssue.querySelector("BUTTON").innerText = "View all Issues"
   let pTag = singleIssue.querySelector("DIV").firstElementChild;
   pTag.innerText = "Click here to view all issues";
-  divIssues.setAttribute("id", "hidethis")
+  divIssuesParent.setAttribute("class", "hidethis")
   singleIssue.addEventListener("click", () => {
   viewAllIssues();
   })
 } 
 
 function viewAllIssues(){
-  divIssues.removeAttribute("id", "hidethis");
-  singleIssue.setAttribute('id', 'hidethis');
+  divIssuesParent.removeAttribute("class", "hidethis");
+  singleIssueParent.setAttribute('class', 'hidethis');
   divIssues.addEventListener("click", () =>{
-    singleIssue.removeAttribute("id", "hidethis")
+    singleIssueParent.removeAttribute("class", "hidethis")
   })
 }
 
 makeCategory.addEventListener("click", function(){
-  categoryDiv.setAttribute("id", "hidethis");
-  divIssues.setAttribute("id", "hidethis")
+  categoryDivParent.setAttribute("class", "hidethis");
+  divIssuesParent.setAttribute("class", "hidethis")
+
   categoryForm();
   
 })
@@ -190,7 +219,7 @@ currentIssues.addEventListener("click", function(){
 });
 
 getCategories.addEventListener("click", (e) => {
-  e.currentTarget.setAttribute("class", "hide_this")
+  e.currentTarget.setAttribute("class", "hidethis")
   alert("Let's get those categories!")
   CategoryAdapter.fetchCategories()
 });
@@ -211,8 +240,8 @@ const editIssueHandler = e =>{
     let dateInput = document.querySelector("[name='date']").value
     let categoryInput = e.currentTarget.querySelector("form").getAttribute("id");
     creationIssueForm.innerHTML = "";
-    categoryDiv.removeAttribute("class", "hide_this")
-    divIssues.removeAttribute("id", "hide_this")
+    categoryDiv.removeAttribute("class", "hidethis")
+    divIssues.removeAttribute("class", "hidethis")
   submitIssue(titleInput, descriptionInput, cross_street_1Input, cross_street_2Input, dateInput, categoryInput);
 }
 
@@ -235,6 +264,7 @@ let postData = {
 };
 return fetch(`http://localhost:3000/issues`, postData)
 .then(resp => resp.json())
+.then(divIssues.innerHTML = "")
  .then (issue => addIssue(issue))
 .catch(() => alert("Something went wrong"))
 };

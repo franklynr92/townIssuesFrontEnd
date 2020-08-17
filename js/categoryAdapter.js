@@ -8,7 +8,7 @@ class CategoryAdapter{
         .then(function(categoriesArray){
           alert("Click on a category to create an issue for that category")
           categoriesArray.forEach(function(category){
-            makeCategory.removeAttribute("id", "hide_this")
+            makeCategoryParent.removeAttribute("class", "hidethis")
             creationCategoryForm.innerHTML = ""  
             getCategoriesIssue(category);
           })
