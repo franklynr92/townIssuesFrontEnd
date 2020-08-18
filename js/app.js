@@ -216,9 +216,7 @@ function viewAllIssues(){
 makeCategory.addEventListener("click", function(){
   categoryDivParent.setAttribute("class", "hidethis");
   divIssuesParent.setAttribute("class", "hidethis")
-
   categoryForm();
-  
 })
 
 getCategories.addEventListener("click", () =>{
